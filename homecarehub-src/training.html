@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>HomeHealthHub - Training & Compliance</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Icons
+        const X = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        );
+
+        const ExternalLink = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+        );
+
+        const Clipboard = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            </svg>
+        );
+
+        const ArrowLeft = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+        );
+
+        // Default training library
+        const defaultTrainings = [
+            {
+                id: 'train-001',
+                title: 'HIPAA Privacy & Security',
+                description: 'Essential HIPAA compliance training covering patient privacy, data security, and regulatory requirements for healthcare workers.',
+                category: 'Compliance',
+                requiredFor: ['All'],
+                dueMonthly: true,
+                duration: '30 minutes',
+                resourceType: 'video',
+                resourceUrl: 'https://www.youtube.com/embed/VL8nHvsQUdE',
+                createdAt: new Date().toISOString()
+            },
+            {
+                id: 'train-002',
+                title: 'Infection Control & Prevention',
+                description: 'CDC guidelines for infection prevention in home healthcare settings, including hand hygiene, PPE, and isolation precautions.',
+                category: 'Safety',
+                requiredFor: ['All'],
+                dueMonthly: true,
+                duration: '25 minutes',
+                resourceType: 'video',
+                resourceUrl: 'https://www.youtube.com/embed/PqXHxe8UIaQ',
+                createdAt: new Date().toISOString()
+            },
+            {
+                id: 'train-003',
+                title: 'Patient Safety & Fall Prevention',
+                description: 'Strategies to prevent falls and ensure patient safety in the home environment, including risk assessment and environmental modifications.',
+                category: 'Safety',
+                requiredFor: ['PCA', 'CNA', 'RN'],
+                dueMonthly: true,
+                duration: '20 minutes',
+                resourceType: 'video',
+                resourceUrl: 'https://www.youtube.com/embed/kGH_DhJpz5Q',
+                createdAt: new Date().toISOString()
+            },
+            {
+                id: 'train-004',
+                title: 'Emergency Response & First Aid',
+                description: 'Emergency procedures and basic first aid for home health workers, including CPR, choking response, and when to call 911.',
+                category: 'Emergency',
+                requiredFor: ['All'],
+                dueMonthly: true,
+                duration: '35 minutes',
+                resourceType: 'video',
+                resourceUrl: 'https://www.youtube.com/embed/s8kVF3YwPRQ',
+                createdAt: new Date().toISOString()
+            },
+            {
+                id: 'train-005',
+                title: 'Documentation & Record Keeping',
+                description: 'Proper documentation practices for home health services, including charting requirements, legal considerations, and CMS guidelines.',
+                category: 'Documentation',
+                requiredFor: ['RN', 'PT', 'OT'],
+                dueMonthly: true,
+                duration: '20 minutes',
+                resourceType: 'link',
+                resourceUrl: 'https://www.cms.gov/medicare/health-safety-standards/quality-safety-oversight-home-health',
+                createdAt: new Date().toISOString()
+            },
+            {
+                id: 'train-006',
+                title: 'Cultural Competency in Healthcare',
+                description: 'Providing culturally sensitive care to diverse patient populations, understanding cultural differences, and effective communication.',
+                category: 'Patient Care',
+                requiredFor: ['All'],
+                dueMonthly: false,
+                duration: '30 minutes',
+                resourceType: 'video',
+                resourceUrl: 'https://www.youtube.com/embed/s4_nvWvMB2M',
+                createdAt: new Date().toISOString()
+            },
+            {
+                id: 'train-007',
+                title: 'Body Mechanics & Safe Patient Handling',
+                description: 'Techniques to prevent injury when moving and transferring patients, proper lifting mechanics, and use of assistive devices.',
+                category: 'Safety',
+                requiredFor: ['PCA', 'CNA', 'PT'],
+                dueMonthly: true,
+                duration: '25 minutes',
+                resourceType: 'video',
+                resourceUrl: 'https://www.youtube.com/embed/BFl2QPWMhco',
+                createdAt: new Date().toISOString()
+            },
+            {
+                id: 'train-008',
+                title: 'Medication Administration Safety',
+                description: 'Safe medication practices, the five rights of medication administration, common errors to avoid, and reporting procedures.',
+                category: 'Clinical Skills',
+                requiredFor: ['RN'],
+                dueMonthly: true,
+                duration: '30 minutes',
+                resourceType: 'video',
+                resourceUrl: 'https://www.youtube.com/embed/X0VZDm_Uhps',
+                createdAt: new Date().toISOString()
+            }
+        ];
+
+        function TrainingApp() {
+            const [currentUser, setCurrentUser] = useState(null);
+            const [employees, setEmployees] = useState([]);
+            const [trainings, setTrainings] = useState([]);
+            const [trainingCompletions, setTrainingCompletions] = useState([]);
+            const [selectedTraining, setSelectedTraining] = useState(null);
+            const [loading, setLoading] = useState(true);
+            const [activityLog, setActivityLog] = useState([]);
+
+            useEffect(() => {
+                loadData();
+            }, []);
+
+            const loadData = async () => {
+                try {
+                    const [employeesResult, trainingsResult, completionsResult, activityLogResult] = await Promise.all([
+                        window.storage.get('healthcare-employees').catch(() => null),
+                        window.storage.get('trainings').catch(() => null),
+                        window.storage.get('training-completions').catch(() => null),
+                        window.storage.get('activity-log').catch(() => null)
+                    ]);
+
+                    if (employeesResult) {
+                        setEmployees(JSON.parse(employeesResult.value));
+                    }
+
+                    if (trainingsResult) {
+                        setTrainings(JSON.parse(trainingsResult.value));
+                    } else {
+                        await window.storage.set('trainings', JSON.stringify(defaultTrainings));
+                        setTrainings(defaultTrainings);
+                    }
+
+                    if (completionsResult) {
+                        setTrainingCompletions(JSON.parse(completionsResult.value));
+                    }
+
+                    if (activityLogResult) {
+                        setActivityLog(JSON.parse(activityLogResult.value));
+                    }
+
+                    // Check if user is logged in - try multiple storage locations
+                    let storedUser = sessionStorage.getItem('currentUser');
+                    console.log('Training module checking sessionStorage:', storedUser);
+                    
+                    if (!storedUser) {
+                        storedUser = localStorage.getItem('currentUser');
+                        console.log('Checking localStorage:', storedUser);
+                    }
+                    
+                    if (!storedUser) {
+                        const windowStorageUser = await window.storage.get('current-user').catch(() => null);
+                        if (windowStorageUser) {
+                            storedUser = windowStorageUser.value;
+                            console.log('Found in window.storage:', storedUser);
+                        }
+                    }
+                    
+                    if (storedUser) {
+                        const user = JSON.parse(storedUser);
+                        console.log('User found in session:', user.name);
+                        setCurrentUser(user);
+                    } else {
+                        console.log('No user found in any storage');
+                    }
+
+                    setLoading(false);
+                } catch (error) {
+                    console.error('Error loading data:', error);
+                    setLoading(false);
+                }
+            };
+
+            const logActivity = async (action, details) => {
+                try {
+                    const log = {
+                        id: Date.now().toString() + Math.random(),
+                        action,
+                        details,
+                        timestamp: new Date().toISOString(),
+                        userId: currentUser?.id
+                    };
+                    const updated = [...activityLog, log];
+                    await window.storage.set('activity-log', JSON.stringify(updated));
+                    setActivityLog(updated);
+                } catch (error) {
+                    console.error('Error logging activity:', error);
+                }
+            };
+
+            const markTrainingComplete = async (trainingId) => {
+                try {
+                    const training = trainings.find(t => t.id === trainingId);
+                    const completion = {
+                        id: Date.now().toString() + Math.random(),
+                        trainingId: trainingId,
+                        employeeId: currentUser.id,
+                        employeeName: currentUser.name,
+                        completedAt: new Date().toISOString(),
+                        dueDate: calculateNextDueDate(training)
+                    };
+
+                    const updated = [...trainingCompletions, completion];
+                    await window.storage.set('training-completions', JSON.stringify(updated));
+                    setTrainingCompletions(updated);
+
+                    await logActivity('Training Completed', `${currentUser.name} completed "${training.title}"`);
+                    alert('Training marked as complete! ✓');
+                    setSelectedTraining(null);
+                } catch (error) {
+                    console.error('Error marking training complete:', error);
+                    alert('Error saving completion. Please try again.');
+                }
+            };
+
+            const calculateNextDueDate = (training) => {
+                const nextDue = new Date();
+                if (training?.dueMonthly) {
+                    nextDue.setMonth(nextDue.getMonth() + 1);
+                } else {
+                    nextDue.setMonth(nextDue.getMonth() + 3);
+                }
+                return nextDue.toISOString();
+            };
+
+            const getEmployeeTrainingStatus = (employeeId) => {
+                const employeeCompletions = trainingCompletions.filter(c => c.employeeId === employeeId);
+                const employee = employees.find(e => e.id === employeeId);
+                const applicableTrainings = trainings.filter(t =>
+                    t.requiredFor.includes('All') || t.requiredFor.includes(employee?.role)
+                );
+
+                let overdue = 0;
+                let dueSoon = 0;
+                let compliant = 0;
+
+                applicableTrainings.forEach(training => {
+                    const lastCompletion = employeeCompletions
+                        .filter(c => c.trainingId === training.id)
+                        .sort((a, b) => new Date(b.completedAt) - new Date(a.completedAt))[0];
+
+                    if (!lastCompletion) {
+                        overdue++;
+                    } else {
+                        const dueDate = new Date(lastCompletion.dueDate);
+                        const now = new Date();
+                        const daysUntilDue = Math.floor((dueDate - now) / (1000 * 60 * 60 * 24));
+
+                        if (daysUntilDue < 0) {
+                            overdue++;
+                        } else if (daysUntilDue <= 5) {
+                            dueSoon++;
+                        } else {
+                            compliant++;
+                        }
+                    }
+                });
+
+                return { overdue, dueSoon, compliant, total: applicableTrainings.length };
+            };
+
+            const sendSMSNotification = async (phoneNumber, message, jobId, employeeId) => {
+                try {
+                    const smsLogResult = await window.storage.get('sms-log').catch(() => null);
+                    const smsLog = smsLogResult ? JSON.parse(smsLogResult.value) : [];
+                    const smsRecord = {
+                        id: Date.now().toString() + Math.random(),
+                        phoneNumber,
+                        message,
+                        jobId,
+                        employeeId,
+                        timestamp: new Date().toISOString(),
+                        status: 'sent'
+                    };
+                    smsLog.push(smsRecord);
+                    await window.storage.set('sms-log', JSON.stringify(smsLog));
+                    console.log(`SMS sent to ${phoneNumber}: ${message}`);
+                } catch (error) {
+                    console.error('Error sending SMS:', error);
+                }
+            };
+
+            const sendTrainingReminders = async () => {
+                if (!confirm('Send SMS reminders to all employees with upcoming or overdue trainings?')) return;
+
+                const now = new Date();
+                let remindersSent = 0;
+
+                for (const employee of employees.filter(e => e.role !== 'Admin' && e.active !== false)) {
+                    const applicableTrainings = trainings.filter(t =>
+                        t.requiredFor.includes('All') || t.requiredFor.includes(employee.role)
+                    );
+
+                    const employeeCompletions = trainingCompletions.filter(c => c.employeeId === employee.id);
+
+                    for (const training of applicableTrainings) {
+                        const lastCompletion = employeeCompletions
+                            .filter(c => c.trainingId === training.id)
+                            .sort((a, b) => new Date(b.completedAt) - new Date(a.completedAt))[0];
+
+                        if (!lastCompletion) {
+                            const message = `🚨 TRAINING OVERDUE\n\n"${training.title}" is required and not yet completed.\n\nPlease log in to complete this ${training.duration} training.\n\nHomeHealthHub > Training`;
+                            await sendSMSNotification(employee.phone, message, 'training-' + training.id, employee.id);
+                            remindersSent++;
+                        } else {
+                            const dueDate = new Date(lastCompletion.dueDate);
+                            const daysUntilDue = Math.floor((dueDate - now) / (1000 * 60 * 60 * 24));
+
+                            if (daysUntilDue < 0) {
+                                const message = `🚨 TRAINING OVERDUE\n\n"${training.title}" was due ${Math.abs(daysUntilDue)} days ago.\n\nComplete immediately to remain compliant.\n\nLog in to HomeHealthHub > Training`;
+                                await sendSMSNotification(employee.phone, message, 'training-' + training.id, employee.id);
+                                remindersSent++;
+                            } else if (daysUntilDue <= 5) {
+                                const message = `⏰ TRAINING DUE SOON\n\n"${training.title}" due in ${daysUntilDue} days (${dueDate.toLocaleDateString()}).\n\nDuration: ${training.duration}\nHomeHealthHub > Training`;
+                                await sendSMSNotification(employee.phone, message, 'training-' + training.id, employee.id);
+                                remindersSent++;
+                            }
+                        }
+                    }
+                }
+
+                await logActivity('Training Reminders Sent', `Sent ${remindersSent} training reminder notifications`);
+                alert(`Training reminders sent! 📱\n\n${remindersSent} SMS notifications delivered.`);
+            };
+
+            const handleLogout = () => {
+                sessionStorage.removeItem('currentUser');
+                localStorage.removeItem('currentUser');
+                window.location.href = 'HomeHealthHub-FINAL.html';
+            };
+
+            if (loading) {
+                return (
+                    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 flex items-center justify-center">
+                        <div className="text-center">
+                            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-purple-600 mx-auto"></div>
+                            <p className="mt-4 text-gray-600">Loading training data...</p>
+                        </div>
+                    </div>
+                );
+            }
+
+            if (!currentUser) {
+                return (
+                    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 flex items-center justify-center p-4">
+                        <div className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full">
+                            <div className="text-center mb-6">
+                                <Clipboard className="w-16 h-16 text-purple-600 mx-auto mb-4" />
+                                <h1 className="text-3xl font-bold text-gray-800">Training Module</h1>
+                                <p className="text-gray-600 mt-2">Please log in to HomeHealthHub first</p>
+                            </div>
+                            <a
+                                href="HomeHealthHub-FINAL.html"
+                                className="w-full px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium text-center block"
+                            >
+                                Go to HomeHealthHub Login
+                            </a>
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100">
+                    {/* Header */}
+                    <div className="bg-white shadow-lg">
+                        <div className="max-w-7xl mx-auto px-4 py-4">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-4">
+                                    <button
+                                        onClick={async () => {
+                                            if (currentUser) {
+                                                await window.storage.set('current-user', JSON.stringify(currentUser));
+                                            }
+                                            window.location.href = 'HomeHealthHub-FINAL.html';
+                                        }}
+                                        className="flex items-center gap-2 text-purple-600 hover:text-purple-800 transition-colors cursor-pointer bg-transparent border-none"
+                                    >
+                                        <ArrowLeft className="w-5 h-5" />
+                                        <span className="font-medium">Back to HomeHealthHub</span>
+                                    </button>
+                                    <div className="h-6 w-px bg-gray-300"></div>
+                                    <div className="flex items-center gap-2">
+                                        <Clipboard className="w-6 h-6 text-purple-600" />
+                                        <h1 className="text-xl font-bold text-gray-800">Training & Compliance</h1>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-4">
+                                    <div className="text-right">
+                                        <div className="font-semibold text-gray-800">{currentUser.name}</div>
+                                        <div className="text-xs text-gray-500">{currentUser.role}</div>
+                                    </div>
+                                    <button
+                                        onClick={handleLogout}
+                                        className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors text-sm"
+                                    >
+                                        Logout
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Main Content */}
+                    <div className="max-w-7xl mx-auto px-4 py-8">
+                        {/* Admin Dashboard */}
+                        {currentUser.role === 'Admin' && (
+                            <>
+                                {/* Compliance Overview Cards */}
+                                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                                    <div className="bg-white p-6 rounded-lg shadow-lg">
+                                        <div className="text-sm text-gray-500 mb-2">Total Employees</div>
+                                        <div className="text-4xl font-bold text-gray-800">
+                                            {employees.filter(e => e.role !== 'Admin').length}
+                                        </div>
+                                        <div className="text-xs text-gray-500 mt-1">Active staff</div>
+                                    </div>
+
+                                    <div className="bg-white p-6 rounded-lg shadow-lg">
+                                        <div className="text-sm text-gray-500 mb-2">Fully Compliant</div>
+                                        <div className="text-4xl font-bold text-green-600">
+                                            {employees.filter(e => e.role !== 'Admin').filter(e => {
+                                                const status = getEmployeeTrainingStatus(e.id);
+                                                return status.overdue === 0 && status.dueSoon === 0;
+                                            }).length}
+                                        </div>
+                                        <div className="text-xs text-gray-500 mt-1">Up to date</div>
+                                    </div>
+
+                                    <div className="bg-white p-6 rounded-lg shadow-lg">
+                                        <div className="text-sm text-gray-500 mb-2">Due Soon (≤5 days)</div>
+                                        <div className="text-4xl font-bold text-orange-600">
+                                            {employees.filter(e => e.role !== 'Admin').reduce((sum, e) => {
+                                                return sum + getEmployeeTrainingStatus(e.id).dueSoon;
+                                            }, 0)}
+                                        </div>
+                                        <div className="text-xs text-gray-500 mt-1">Needs attention</div>
+                                    </div>
+
+                                    <div className="bg-white p-6 rounded-lg shadow-lg">
+                                        <div className="text-sm text-gray-500 mb-2">Overdue</div>
+                                        <div className="text-4xl font-bold text-red-600">
+                                            {employees.filter(e => e.role !== 'Admin').reduce((sum, e) => {
+                                                return sum + getEmployeeTrainingStatus(e.id).overdue;
+                                            }, 0)}
+                                        </div>
+                                        <div className="text-xs text-gray-500 mt-1">Urgent</div>
+                                    </div>
+                                </div>
+
+                                {/* Send Reminders Button */}
+                                <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+                                    <div className="flex items-center justify-between">
+                                        <div>
+                                            <h3 className="text-xl font-bold text-gray-800">Training Reminders</h3>
+                                            <p className="text-sm text-gray-600 mt-1">
+                                                Send SMS notifications to employees with upcoming or overdue trainings
+                                            </p>
+                                        </div>
+                                        <button
+                                            onClick={sendTrainingReminders}
+                                            className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium whitespace-nowrap"
+                                        >
+                                            📱 Send Reminders
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {/* Employee Compliance Table */}
+                                <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+                                    <h3 className="text-xl font-bold text-gray-800 mb-4">Employee Training Status</h3>
+                                    <div className="overflow-x-auto">
+                                        <table className="w-full">
+                                            <thead>
+                                                <tr className="border-b">
+                                                    <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Employee</th>
+                                                    <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Role</th>
+                                                    <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Compliant</th>
+                                                    <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Due Soon</th>
+                                                    <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Overdue</th>
+                                                    <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Compliance Rate</th>
+                                                    <th className="text-left py-3 px-4 text-sm font-semibold text-gray-700">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {employees.filter(e => e.role !== 'Admin').map(emp => {
+                                                    const status = getEmployeeTrainingStatus(emp.id);
+                                                    const complianceRate = status.total > 0
+                                                        ? Math.round((status.compliant / status.total) * 100)
+                                                        : 0;
+
+                                                    return (
+                                                        <tr key={emp.id} className="border-b hover:bg-gray-50">
+                                                            <td className="py-3 px-4 text-sm font-medium text-gray-800">{emp.name}</td>
+                                                            <td className="py-3 px-4 text-sm text-gray-600">{emp.role}</td>
+                                                            <td className="py-3 px-4 text-sm">
+                                                                <span className="font-semibold text-green-600">{status.compliant}</span>
+                                                            </td>
+                                                            <td className="py-3 px-4 text-sm">
+                                                                <span className="font-semibold text-orange-600">{status.dueSoon}</span>
+                                                            </td>
+                                                            <td className="py-3 px-4 text-sm">
+                                                                <span className="font-semibold text-red-600">{status.overdue}</span>
+                                                            </td>
+                                                            <td className="py-3 px-4 text-sm">
+                                                                <div className="flex items-center gap-2">
+                                                                    <div className="w-24 bg-gray-200 rounded-full h-2">
+                                                                        <div
+                                                                            className={`h-2 rounded-full ${complianceRate >= 80 ? 'bg-green-500' :
+                                                                                    complianceRate >= 50 ? 'bg-orange-500' : 'bg-red-500'
+                                                                                }`}
+                                                                            style={{ width: `${complianceRate}%` }}
+                                                                        ></div>
+                                                                    </div>
+                                                                    <span className="text-xs font-medium">{complianceRate}%</span>
+                                                                </div>
+                                                            </td>
+                                                            <td className="py-3 px-4 text-sm">
+                                                                {status.overdue > 0 ? (
+                                                                    <span className="px-2 py-1 bg-red-100 text-red-700 rounded-full text-xs font-semibold">
+                                                                        NON-COMPLIANT
+                                                                    </span>
+                                                                ) : status.dueSoon > 0 ? (
+                                                                    <span className="px-2 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-semibold">
+                                                                        DUE SOON
+                                                                    </span>
+                                                                ) : (
+                                                                    <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">
+                                                                        COMPLIANT
+                                                                    </span>
+                                                                )}
+                                                            </td>
+                                                        </tr>
+                                                    );
+                                                })}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </>
+                        )}
+
+                        {/* Training Library - For All Users */}
+                        <div className="bg-white rounded-lg shadow-lg p-6">
+                            <h3 className="text-xl font-bold text-gray-800 mb-4">
+                                {currentUser.role === 'Admin' ? 'Training Library' : 'My Required Trainings'}
+                            </h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {trainings
+                                    .filter(t =>
+                                        currentUser.role === 'Admin' ||
+                                        t.requiredFor.includes('All') ||
+                                        t.requiredFor.includes(currentUser.role)
+                                    )
+                                    .map(training => {
+                                        const lastCompletion = trainingCompletions
+                                            .filter(c => c.trainingId === training.id && c.employeeId === currentUser.id)
+                                            .sort((a, b) => new Date(b.completedAt) - new Date(a.completedAt))[0];
+
+                                        let statusBadge = null;
+                                        let statusColor = 'gray';
+                                        let borderColor = 'border-gray-300';
+
+                                        if (lastCompletion) {
+                                            const dueDate = new Date(lastCompletion.dueDate);
+                                            const now = new Date();
+                                            const daysUntilDue = Math.floor((dueDate - now) / (1000 * 60 * 60 * 24));
+
+                                            if (daysUntilDue < 0) {
+                                                statusBadge = `OVERDUE (${Math.abs(daysUntilDue)} days)`;
+                                                statusColor = 'red';
+                                                borderColor = 'border-red-300';
+                                            } else if (daysUntilDue <= 5) {
+                                                statusBadge = `DUE IN ${daysUntilDue} DAYS`;
+                                                statusColor = 'orange';
+                                                borderColor = 'border-orange-300';
+                                            } else {
+                                                statusBadge = `Due ${dueDate.toLocaleDateString()}`;
+                                                statusColor = 'green';
+                                                borderColor = 'border-green-300';
+                                            }
+                                        } else {
+                                            statusBadge = 'NOT COMPLETED';
+                                            statusColor = 'red';
+                                            borderColor = 'border-red-300';
+                                        }
+
+                                        return (
+                                            <div
+                                                key={training.id}
+                                                className={`p-5 border-2 ${borderColor} rounded-lg cursor-pointer hover:shadow-lg transition-all bg-white`}
+                                                onClick={() => setSelectedTraining(training)}
+                                            >
+                                                <div className="flex items-start justify-between mb-3">
+                                                    <div className="flex-1">
+                                                        <h4 className="font-bold text-gray-900 text-lg mb-1">{training.title}</h4>
+                                                        <p className="text-sm text-gray-600">{training.description}</p>
+                                                    </div>
+                                                    <span className={`px-2 py-1 bg-${statusColor}-100 text-${statusColor}-700 rounded-full text-xs font-semibold whitespace-nowrap ml-2`}>
+                                                        {statusBadge}
+                                                    </span>
+                                                </div>
+                                                <div className="flex items-center gap-4 text-xs text-gray-600">
+                                                    <span>⏱️ {training.duration}</span>
+                                                    <span>📂 {training.category}</span>
+                                                    <span>
+                                                        {training.resourceType === 'video' ? '🎥 Video' : '🔗 Resource'}
+                                                    </span>
+                                                </div>
+                                                {lastCompletion && (
+                                                    <div className="mt-2 text-xs text-gray-500">
+                                                        Last completed: {new Date(lastCompletion.completedAt).toLocaleDateString()}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        );
+                                    })}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Training Modal */}
+                    {selectedTraining && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+                            <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+                                <div className="bg-gradient-to-r from-purple-600 to-indigo-600 p-6 text-white">
+                                    <div className="flex items-center justify-between">
+                                        <div>
+                                            <h2 className="text-2xl font-bold">{selectedTraining.title}</h2>
+                                            <p className="text-purple-100 mt-1">{selectedTraining.category} • {selectedTraining.duration}</p>
+                                        </div>
+                                        <button
+                                            onClick={() => setSelectedTraining(null)}
+                                            className="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-2 transition-colors"
+                                        >
+                                            <X className="w-6 h-6" />
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="p-6 space-y-4">
+                                    <p className="text-gray-700">{selectedTraining.description}</p>
+
+                                    {/* Video/Resource Embed */}
+                                    {selectedTraining.resourceType === 'video' ? (
+                                        <div className="aspect-video">
+                                            <iframe
+                                                src={selectedTraining.resourceUrl}
+                                                className="w-full h-full rounded-lg"
+                                                allowFullScreen
+                                                title={selectedTraining.title}
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div className="p-6 bg-blue-50 border border-blue-200 rounded-lg">
+                                            <p className="text-blue-900 font-semibold mb-3">External Resource</p>
+                                            <a
+                                                href={selectedTraining.resourceUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-blue-600 hover:text-blue-800 underline flex items-center gap-2"
+                                            >
+                                                Open Training Resource
+                                                <ExternalLink className="w-4 h-4" />
+                                            </a>
+                                        </div>
+                                    )}
+
+                                    {/* Mark Complete Button - Only for non-admin employees */}
+                                    {currentUser.role !== 'Admin' && (
+                                        <button
+                                            onClick={() => markTrainingComplete(selectedTraining.id)}
+                                            className="w-full px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium text-lg"
+                                        >
+                                            ✓ Mark Training as Complete
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        ReactDOM.render(<TrainingApp />, document.getElementById('root'));
+    </script>
+</body>
+</html>
