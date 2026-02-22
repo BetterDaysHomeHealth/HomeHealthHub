@@ -157,7 +157,7 @@ function AddressAutocomplete({ value, onAddressSelect }) {
         onBlur: () => setTimeout(() => setShowDropdown(false), 200),
         required: true,
         placeholder: 'Start typing an address...',
-        className: 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+        className: 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500'
       }),
       showDropdown && suggestions.length > 0 && React.createElement('div', {
         className: 'absolute z-50 w-full bg-white border border-gray-300 rounded-lg shadow-lg mt-1 max-h-60 overflow-y-auto'
@@ -166,7 +166,7 @@ function AddressAutocomplete({ value, onAddressSelect }) {
           React.createElement('div', {
             key: feature.id,
             onMouseDown: () => handleSelect(feature),
-            className: 'px-4 py-2 hover:bg-blue-50 cursor-pointer text-sm text-gray-700 border-b border-gray-100'
+            className: 'px-4 py-2 hover:bg-teal-50 cursor-pointer text-sm text-gray-700 border-b border-gray-100'
           }, feature.place_name)
         )
       )
@@ -373,7 +373,7 @@ function TrainingPortal({ currentUser, trainings, setTrainings, trainingCompleti
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
             <div className="p-6 bg-white rounded-lg shadow border-l-4 border-green-500">
               <p className="text-gray-600 text-sm font-semibold uppercase">Completed This Month</p>
-              <p className="text-4xl font-bold text-blue-900 mt-2">{employeeStatus.filter(e => e.completed).length}</p>
+              <p className="text-4xl font-bold text-teal-800 mt-2">{employeeStatus.filter(e => e.completed).length}</p>
               <p className="text-xs text-gray-500 mt-1">employees</p>
             </div>
             <div className="p-6 bg-white rounded-lg shadow border-l-4 border-yellow-500">
@@ -388,7 +388,7 @@ function TrainingPortal({ currentUser, trainings, setTrainings, trainingCompleti
             </div>
             <div className="p-6 bg-white rounded-lg shadow border-l-4 border-blue-500">
               <p className="text-gray-600 text-sm font-semibold uppercase">Total Assigned</p>
-              <p className="text-4xl font-bold text-blue-600 mt-2">{employeeStatus.length}</p>
+              <p className="text-4xl font-bold text-teal-600 mt-2">{employeeStatus.length}</p>
               <p className="text-xs text-gray-500 mt-1">employees</p>
             </div>
           </div>
@@ -403,7 +403,7 @@ function TrainingPortal({ currentUser, trainings, setTrainings, trainingCompleti
                   onClick={() => setAdminFilterStatus(status)}
                   className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
                     adminFilterStatus === status
-                      ? 'bg-blue-900 text-white'
+                      ? 'bg-teal-800 text-white'
                       : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                   }`}
                 >
@@ -447,7 +447,7 @@ function TrainingPortal({ currentUser, trainings, setTrainings, trainingCompleti
                           <div className="text-xs text-gray-500">📞 {emp.phone}</div>
                         </td>
                         <td className="px-6 py-4">
-                          <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold">{emp.role}</span>
+                          <span className="px-3 py-1 bg-teal-100 text-teal-700 rounded-full text-sm font-semibold">{emp.role}</span>
                         </td>
                         <td className="px-6 py-4">
                           <div className="text-sm font-semibold text-gray-800">{emp.patientInitials} ({emp.patientId})</div>
@@ -466,7 +466,7 @@ function TrainingPortal({ currentUser, trainings, setTrainings, trainingCompleti
                         <td className="px-6 py-4 text-sm text-gray-700">{emp.dueDate}</td>
                         <td className="px-6 py-4">
                           <div className={`text-sm font-semibold ${
-                            emp.completed ? 'text-blue-900' :
+                            emp.completed ? 'text-teal-800' :
                             emp.status === 'overdue' ? 'text-red-600' :
                             emp.status === 'dueSoon' ? 'text-yellow-600' :
                             'text-gray-600'
@@ -506,7 +506,7 @@ function TrainingPortal({ currentUser, trainings, setTrainings, trainingCompleti
           <div className="max-w-3xl mx-auto px-6 py-3 flex items-center justify-between">
             <button 
               onClick={() => setSelectedTraining(null)} 
-              className="px-4 py-2 bg-blue-900 text-white rounded hover:bg-blue-800 font-semibold"
+              className="px-4 py-2 bg-teal-800 text-white rounded hover:bg-teal-700 font-semibold"
             >
               ← Back to Training Library
             </button>
@@ -525,7 +525,7 @@ function TrainingPortal({ currentUser, trainings, setTrainings, trainingCompleti
             <div className="flex gap-4 mt-4">
               <span className="px-3 py-1 bg-teal-100 text-teal-700 rounded-full text-sm font-semibold">{selectedTraining.category}</span>
               <span className="px-3 py-1 bg-teal-100 text-teal-700 rounded-full text-sm font-semibold">{selectedTraining.difficulty}</span>
-              <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold">~{selectedTraining.duration} min</span>
+              <span className="px-3 py-1 bg-teal-100 text-teal-700 rounded-full text-sm font-semibold">~{selectedTraining.duration} min</span>
             </div>
           </div>
 
@@ -556,7 +556,7 @@ function TrainingPortal({ currentUser, trainings, setTrainings, trainingCompleti
                     <p className="font-semibold text-gray-800 mb-4">{idx + 1}. {question.question}</p>
                     <div className="space-y-3">
                       {question.options.map((option, optIdx) => (
-                        <label key={optIdx} className="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-blue-50 cursor-pointer transition-colors">
+                        <label key={optIdx} className="flex items-center p-3 border border-gray-300 rounded-lg hover:bg-teal-50 cursor-pointer transition-colors">
                           <input 
                             type="radio" 
                             name={question.id} 
@@ -575,7 +575,7 @@ function TrainingPortal({ currentUser, trainings, setTrainings, trainingCompleti
                 <button 
                   onClick={handleQuizSubmit} 
                   disabled={quizSubmitted || Object.keys(quizAnswers).length < 10}
-                  className="w-full px-6 py-3 bg-blue-900 text-white rounded-lg font-semibold hover:bg-blue-800 disabled:bg-gray-400 transition-colors"
+                  className="w-full px-6 py-3 bg-teal-800 text-white rounded-lg font-semibold hover:bg-teal-700 disabled:bg-gray-400 transition-colors"
                 >
                   {quizSubmitted ? '✓ Training Completed!' : 'Submit Quiz'}
                 </button>
@@ -586,10 +586,10 @@ function TrainingPortal({ currentUser, trainings, setTrainings, trainingCompleti
           {quizSubmitted && (
             <div className="p-6 bg-slate-50 border border-green-200 rounded-lg text-center">
               <p className="text-teal-700 font-semibold text-lg">✓ Training Complete!</p>
-              <p className="text-blue-900 mt-2">This training counts toward your monthly requirement.</p>
+              <p className="text-teal-800 mt-2">This training counts toward your monthly requirement.</p>
               <button 
                 onClick={() => setSelectedTraining(null)}
-                className="mt-4 px-6 py-2 bg-blue-900 text-white rounded-lg font-semibold hover:bg-blue-800"
+                className="mt-4 px-6 py-2 bg-teal-800 text-white rounded-lg font-semibold hover:bg-teal-700"
               >
                 Return to Training Library
               </button>
@@ -623,18 +623,18 @@ function TrainingPortal({ currentUser, trainings, setTrainings, trainingCompleti
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           <div className={`p-6 rounded-lg shadow ${completedThisMonth ? 'bg-slate-50 border-2 border-green-500' : 'bg-white border border-gray-200'}`}>
             <p className="text-gray-600 text-sm font-semibold uppercase">This Month's Progress</p>
-            <p className="text-4xl font-bold text-blue-900 mt-2">{monthlyHours}/{monthRequired}</p>
+            <p className="text-4xl font-bold text-teal-800 mt-2">{monthlyHours}/{monthRequired}</p>
             <p className="text-gray-600 text-sm mt-2">hours completed</p>
-            {completedThisMonth && <p className="text-blue-900 font-semibold mt-2">✓ Requirement Met!</p>}
+            {completedThisMonth && <p className="text-teal-800 font-semibold mt-2">✓ Requirement Met!</p>}
           </div>
           <div className="p-6 bg-white rounded-lg shadow border border-gray-200">
             <p className="text-gray-600 text-sm font-semibold uppercase">Total Trainings</p>
-            <p className="text-4xl font-bold text-blue-900 mt-2">{filteredTrainings.length}</p>
+            <p className="text-4xl font-bold text-teal-800 mt-2">{filteredTrainings.length}</p>
             <p className="text-gray-600 text-sm mt-2">available for your role</p>
           </div>
           <div className="p-6 bg-white rounded-lg shadow border border-gray-200">
             <p className="text-gray-600 text-sm font-semibold uppercase">All-Time Completions</p>
-            <p className="text-4xl font-bold text-blue-600 mt-2">{trainingCompletions.filter(c => c.userId === currentUser.id).length}</p>
+            <p className="text-4xl font-bold text-teal-600 mt-2">{trainingCompletions.filter(c => c.userId === currentUser.id).length}</p>
             <p className="text-gray-600 text-sm mt-2">trainings completed</p>
           </div>
         </div>
@@ -648,7 +648,7 @@ function TrainingPortal({ currentUser, trainings, setTrainings, trainingCompleti
               <select 
                 value={filterCategory} 
                 onChange={(e) => setFilterCategory(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
               >
                 <option value="all">All Categories</option>
                 {categories.map(cat => (
@@ -661,7 +661,7 @@ function TrainingPortal({ currentUser, trainings, setTrainings, trainingCompleti
               <select 
                 value={filterDifficulty} 
                 onChange={(e) => setFilterDifficulty(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
               >
                 <option value="all">All Levels</option>
                 {difficulties.map(diff => (
@@ -691,13 +691,13 @@ function TrainingPortal({ currentUser, trainings, setTrainings, trainingCompleti
                   <span className="px-2 py-1 bg-gray-100 rounded">{training.duration} min</span>
                 </div>
                 {completed ? (
-                  <div className="w-full px-4 py-2 bg-blue-900 text-white text-center rounded-lg font-semibold cursor-default">
+                  <div className="w-full px-4 py-2 bg-teal-800 text-white text-center rounded-lg font-semibold cursor-default">
                     ✓ Completed This Month
                   </div>
                 ) : (
                   <button 
                     onClick={() => handleStartTraining(training)}
-                    className="w-full px-4 py-2 bg-blue-900 text-white rounded-lg font-semibold hover:bg-blue-800 transition-colors"
+                    className="w-full px-4 py-2 bg-teal-800 text-white rounded-lg font-semibold hover:bg-teal-700 transition-colors"
                   >
                     Start Training
                   </button>
@@ -1494,7 +1494,7 @@ Check Logs tab for full SMS details.`);
                    filterDateRange.end !== '';};if (loading) {
             return (
               <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-teal-50 flex items-center justify-center">
-                <div className="text-xl text-blue-900">Loading...</div>
+                <div className="text-xl text-teal-800">Loading...</div>
               </div>
             );}
 
@@ -1508,7 +1508,7 @@ Check Logs tab for full SMS details.`);
                       <div className="p-6">
                         <div className="flex items-center justify-between mb-4">
                           <div className="flex items-center gap-3">
-                            <Mail className="w-8 h-8 text-blue-900" />
+                            <Mail className="w-8 h-8 text-teal-800" />
                             <h2 className="text-2xl font-bold text-gray-800">Forgot Password?</h2>
                           </div>
                           <button
@@ -1546,7 +1546,7 @@ Check Logs tab for full SMS details.`);
                               required
                               value={forgotPasswordEmail}
                               onChange={(e) => setForgotPasswordEmail(e.target.value)}
-                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                               placeholder="your.email@example.com"
                             />
                           </div>
@@ -1554,7 +1554,7 @@ Check Logs tab for full SMS details.`);
                           <div className="flex gap-3 pt-2">
                             <button
                               type="submit"
-                              className="flex-1 px-6 py-3 bg-blue-900 text-white rounded-lg hover:bg-blue-800 transition-colors font-medium"
+                              className="flex-1 px-6 py-3 bg-teal-800 text-white rounded-lg hover:bg-teal-700 transition-colors font-medium"
                             >
                               Send Reset Email
                             </button>
@@ -1568,8 +1568,8 @@ Check Logs tab for full SMS details.`);
                           </div>
                         </form>
 
-                        <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                          <p className="text-xs text-blue-800">
+                        <div className="mt-4 p-3 bg-teal-50 border border-teal-200 rounded-lg">
+                          <p className="text-xs text-teal-700">
                             <strong>Note:</strong> In production,this would send an actual email.
                             For now,check the browser console and popup alert for your temporary password.
                           </p>
@@ -1582,8 +1582,8 @@ Check Logs tab for full SMS details.`);
                 <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-teal-50 flex items-center justify-center p-4">
                 <div className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full">
                   <div className="flex flex-col items-center justify-center mb-6">
-                    <Users className="w-16 h-16 text-blue-900 mb-3" />
-                    <h1 className="text-4xl font-bold text-blue-900">HomeHealthHub</h1>
+                    <Users className="w-16 h-16 text-teal-800 mb-3" />
+                    <h1 className="text-4xl font-bold text-teal-800">HomeHealthHub</h1>
                     <p className="text-gray-500 text-sm mt-1">Better Days Home Health</p>
                   </div>
                   <p className="text-center text-gray-600 mb-6">Sign in to access your dashboard</p>
@@ -1602,7 +1602,7 @@ Check Logs tab for full SMS details.`);
                         required
                         value={loginForm.email}
                         onChange={(e) => setLoginForm({ ...loginForm,email: e.target.value })}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                         placeholder="your.email@example.com"
                       />
                     </div>
@@ -1614,14 +1614,14 @@ Check Logs tab for full SMS details.`);
                         required
                         value={loginForm.password}
                         onChange={(e) => setLoginForm({ ...loginForm,password: e.target.value })}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                         placeholder="••••••••"
                       />
                     </div>
 
                     <button
                       type="submit"
-                      className="w-full px-6 py-3 bg-blue-900 text-white rounded-lg hover:bg-blue-800 transition-colors font-medium"
+                      className="w-full px-6 py-3 bg-teal-800 text-white rounded-lg hover:bg-teal-700 transition-colors font-medium"
                     >
                       Sign In
                     </button>
@@ -1631,7 +1631,7 @@ Check Logs tab for full SMS details.`);
                     <button
                       onClick={() =>{
                         setShowForgotPassword(true);setForgotPasswordError('');setForgotPasswordSuccess('');setForgotPasswordEmail('');}}
-                      className="text-blue-900 hover:text-teal-700 text-sm font-medium"
+                      className="text-teal-800 hover:text-teal-700 text-sm font-medium"
                     >
                       Forgot username or password?
                     </button>
@@ -1642,7 +1642,7 @@ Check Logs tab for full SMS details.`);
                       Don't have an account?{' '}
                       <button
                         onClick={() => setAuthView('signup')}
-                        className="text-blue-900 hover:text-teal-700 font-medium"
+                        className="text-teal-800 hover:text-teal-700 font-medium"
                       >
                         Sign Up
                       </button>
@@ -1660,8 +1660,8 @@ Check Logs tab for full SMS details.`);
               <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-teal-50 flex items-center justify-center p-4">
                 <div className="bg-white rounded-lg shadow-xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
                   <div className="flex flex-col items-center justify-center mb-6">
-                    <Users className="w-16 h-16 text-blue-900 mb-3" />
-                    <h1 className="text-4xl font-bold text-blue-900">HomeHealthHub</h1>
+                    <Users className="w-16 h-16 text-teal-800 mb-3" />
+                    <h1 className="text-4xl font-bold text-teal-800">HomeHealthHub</h1>
                     <p className="text-gray-500 text-sm mt-1">Better Days Home Health</p>
                     <h2 className="text-2xl font-bold text-gray-800 mt-4">Create Account</h2>
                   </div>
@@ -1681,7 +1681,7 @@ Check Logs tab for full SMS details.`);
                         required
                         value={signupForm.name}
                         onChange={(e) => setSignupForm({ ...signupForm,name: e.target.value })}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                         placeholder="John Doe"
                       />
                     </div>
@@ -1693,7 +1693,7 @@ Check Logs tab for full SMS details.`);
                         required
                         value={signupForm.email}
                         onChange={(e) => setSignupForm({ ...signupForm,email: e.target.value })}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                         placeholder="your.email@example.com"
                       />
                     </div>
@@ -1705,7 +1705,7 @@ Check Logs tab for full SMS details.`);
                         required
                         value={signupForm.phone}
                         onChange={(e) => setSignupForm({ ...signupForm,phone: e.target.value })}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                         placeholder="(555) 123-4567"
                       />
                     </div>
@@ -1719,7 +1719,7 @@ Check Logs tab for full SMS details.`);
                         required
                         value={signupForm.yearsOfExperience}
                         onChange={(e) => setSignupForm({ ...signupForm,yearsOfExperience: e.target.value })}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                         placeholder="e.g.,5"
                       />
                     </div>
@@ -1732,7 +1732,7 @@ Check Logs tab for full SMS details.`);
                           required
                           value={signupForm.password}
                           onChange={(e) => setSignupForm({ ...signupForm,password: e.target.value })}
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                           placeholder="••••••••"
                         />
                       </div>
@@ -1743,7 +1743,7 @@ Check Logs tab for full SMS details.`);
                           required
                           value={signupForm.confirmPassword}
                           onChange={(e) => setSignupForm({ ...signupForm,confirmPassword: e.target.value })}
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                           placeholder="••••••••"
                         />
                       </div>
@@ -1755,7 +1755,7 @@ Check Logs tab for full SMS details.`);
                         required
                         value={signupForm.careType || ''}
                         onChange={(e) => setSignupForm({ ...signupForm,careType: e.target.value,role: '',certifications: [] })}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                       >
                         <option value="">Select care type...</option>
                         <option value="skilled">Skilled Care</option>
@@ -1770,7 +1770,7 @@ Check Logs tab for full SMS details.`);
                           required
                           value={signupForm.role}
                           onChange={(e) => setSignupForm({ ...signupForm,role: e.target.value,certifications: [] })}
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                         >
                           <option value="">Select your role...</option>
                           <option value="RN">Registered Nurse (RN)</option>
@@ -1787,7 +1787,7 @@ Check Logs tab for full SMS details.`);
                           required
                           value={signupForm.role}
                           onChange={(e) => setSignupForm({ ...signupForm,role: e.target.value,certifications: [] })}
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                         >
                           <option value="">Select your role...</option>
                           <option value="PCA">Personal Care Aide (PCA)</option>
@@ -1809,7 +1809,7 @@ Check Logs tab for full SMS details.`);
                                   type="checkbox"
                                   checked={signupForm.certifications.includes(cert)}
                                   onChange={() => toggleCertification(cert)}
-                                  className="w-4 h-4 text-blue-900 border-gray-300 rounded focus:ring-blue-500"
+                                  className="w-4 h-4 text-teal-800 border-gray-300 rounded focus:ring-teal-500"
                                 />
                                 <span className="text-sm text-gray-700">{cert}</span>
                               </label>
@@ -1842,7 +1842,7 @@ Check Logs tab for full SMS details.`);
                                   type="checkbox"
                                   checked={signupForm.specializations.includes(spec)}
                                   onChange={() => toggleSpecialization(spec)}
-                                  className="w-4 h-4 text-blue-900 border-gray-300 rounded focus:ring-green-500"
+                                  className="w-4 h-4 text-teal-800 border-gray-300 rounded focus:ring-green-500"
                                 />
                                 <span className="text-sm text-gray-700">{spec}</span>
                               </label>
@@ -1873,7 +1873,7 @@ Check Logs tab for full SMS details.`);
                                 type="checkbox"
                                 checked={signupForm.serviceCities.includes(city)}
                                 onChange={() => toggleServiceCity(city)}
-                                className="w-4 h-4 text-blue-900 border-gray-300 rounded focus:ring-blue-500"
+                                className="w-4 h-4 text-teal-800 border-gray-300 rounded focus:ring-teal-500"
                               />
                               <span className="text-sm text-gray-700">{city}</span>
                             </label>
@@ -1894,7 +1894,7 @@ Check Logs tab for full SMS details.`);
                     <div className="flex gap-3 pt-4">
                       <button
                         type="submit"
-                        className="flex-1 px-6 py-3 bg-blue-900 text-white rounded-lg hover:bg-blue-800 transition-colors font-medium"
+                        className="flex-1 px-6 py-3 bg-teal-800 text-white rounded-lg hover:bg-teal-700 transition-colors font-medium"
                       >
                         Create Account
                       </button>
@@ -1918,9 +1918,9 @@ Check Logs tab for full SMS details.`);
                 <div className="bg-white rounded-lg shadow-lg p-4 mb-4">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <Users className="w-10 h-10 text-blue-900" />
+                      <Users className="w-10 h-10 text-teal-800" />
                       <div>
-                        <h1 className="text-2xl font-bold text-blue-900">HomeHealthHub</h1>
+                        <h1 className="text-2xl font-bold text-teal-800">HomeHealthHub</h1>
                       </div>
                     </div>
                     <div className="text-right">
@@ -1933,7 +1933,7 @@ Check Logs tab for full SMS details.`);
                 {/* HIPAA Compliance Banner */}
                 <div className="bg-slate-50 border-l-4 border-green-500 rounded-lg p-4 mb-4">
                   <div className="flex items-center gap-3">
-                    <Shield className="w-6 h-6 text-blue-900" />
+                    <Shield className="w-6 h-6 text-teal-800" />
                     <div>
                       <h3 className="font-semibold text-slate-900">HIPAA Compliant Platform</h3>
                       <p className="text-sm text-slate-800">
@@ -1944,12 +1944,12 @@ Check Logs tab for full SMS details.`);
                 </div>
 
                 {currentView === 'admin' && (
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                  <div className="bg-teal-50 border border-teal-200 rounded-lg p-4 mb-6">
                     <div className="flex items-start gap-3">
-                      <MessageSquare className="w-5 h-5 text-blue-600 mt-0.5" />
+                      <MessageSquare className="w-5 h-5 text-teal-600 mt-0.5" />
                       <div>
-                        <h3 className="font-semibold text-blue-900 mb-1">SMS Notifications Enabled</h3>
-                        <p className="text-sm text-blue-800">
+                        <h3 className="font-semibold text-teal-800 mb-1">SMS Notifications Enabled</h3>
+                        <p className="text-sm text-teal-700">
                           When you post a new job,SMS notifications are automatically sent to all employees who have the required certifications.
                           All notifications are logged in the Dashboard Activity Log for your records.
                         </p>
@@ -2019,7 +2019,7 @@ Check Logs tab for full SMS details.`);
                                     <div
                                       key={notif.id}
                                       className={`p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer ${
-                                        !notif.read.includes(selectedEmployee) ? 'bg-blue-50' : ''
+                                        !notif.read.includes(selectedEmployee) ? 'bg-teal-50' : ''
                                       }`}
                                       onClick={() => markNotificationAsRead(notif.id)}
                                     >
@@ -2068,7 +2068,7 @@ Check Logs tab for full SMS details.`);
                               setCurrentView('employee');setShowMyJobs(false);}}
                             className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                               currentView === 'employee' && !showMyJobs
-                                ? 'bg-blue-900 text-white'
+                                ? 'bg-teal-800 text-white'
                                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                             }`}
                           >
@@ -2080,7 +2080,7 @@ Check Logs tab for full SMS details.`);
                               setCurrentView('employee');setShowMyJobs(true);}}
                             className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                               showMyJobs
-                                ? 'bg-blue-900 text-white'
+                                ? 'bg-teal-800 text-white'
                                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                             }`}
                           >
@@ -2093,7 +2093,7 @@ Check Logs tab for full SMS details.`);
                             }}
                             className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                               currentView === 'training'
-                                ? 'bg-blue-900 text-white'
+                                ? 'bg-teal-800 text-white'
                                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                             }`}
                           >
@@ -2130,8 +2130,8 @@ Check Logs tab for full SMS details.`);
                         <button
                           onClick={() =>{
                             setCurrentView('jobs-dashboard');setShowAllJobs(false);}}
-                          className={`px-4 py-2 rounded-lg hover:bg-blue-800 transition-colors flex items-center gap-2 ${
-                            currentView === 'jobs-dashboard' ? 'bg-blue-800 text-white' : 'bg-blue-900 text-white'
+                          className={`px-4 py-2 rounded-lg hover:bg-teal-700 transition-colors flex items-center gap-2 ${
+                            currentView === 'jobs-dashboard' ? 'bg-teal-700 text-white' : 'bg-teal-800 text-white'
                           }`}
                         >
                           <Briefcase className="w-5 h-5" />
@@ -2140,8 +2140,8 @@ Check Logs tab for full SMS details.`);
                         <button
                           onClick={() =>{
                             setCurrentView('employees-dashboard');setShowAllJobs(false);}}
-                          className={`px-4 py-2 rounded-lg hover:bg-blue-800 transition-colors flex items-center gap-2 ${
-                            currentView === 'employees-dashboard' ? 'bg-blue-800 text-white' : 'bg-blue-900 text-white'
+                          className={`px-4 py-2 rounded-lg hover:bg-teal-700 transition-colors flex items-center gap-2 ${
+                            currentView === 'employees-dashboard' ? 'bg-teal-700 text-white' : 'bg-teal-800 text-white'
                           }`}
                         >
                           <Users className="w-5 h-5" />
@@ -2150,8 +2150,8 @@ Check Logs tab for full SMS details.`);
                         <button
                           onClick={() =>{
                             setCurrentView('referrals');setShowAllJobs(false);}}
-                          className={`px-4 py-2 rounded-lg hover:bg-blue-800 transition-colors flex items-center gap-2 ${
-                            currentView === 'referrals' ? 'bg-blue-800 text-white' : 'bg-blue-900 text-white'
+                          className={`px-4 py-2 rounded-lg hover:bg-teal-700 transition-colors flex items-center gap-2 ${
+                            currentView === 'referrals' ? 'bg-teal-700 text-white' : 'bg-teal-800 text-white'
                           }`}
                         >
                           <Star className="w-5 h-5" />
@@ -2162,8 +2162,8 @@ Check Logs tab for full SMS details.`);
                             setCurrentView('training');
                             setShowAllJobs(false);
                           }}
-                          className={`px-4 py-2 rounded-lg hover:bg-blue-800 transition-colors flex items-center gap-2 ${
-                            currentView === 'training' ? 'bg-blue-800 text-white' : 'bg-blue-900 text-white'
+                          className={`px-4 py-2 rounded-lg hover:bg-teal-700 transition-colors flex items-center gap-2 ${
+                            currentView === 'training' ? 'bg-teal-700 text-white' : 'bg-teal-800 text-white'
                           }`}
                         >
                           <Clipboard className="w-5 h-5" />
@@ -2172,8 +2172,8 @@ Check Logs tab for full SMS details.`);
                         <button
                           onClick={() =>{
                             setCurrentView('logs');setShowAllJobs(false);}}
-                          className={`px-4 py-2 rounded-lg hover:bg-blue-800 transition-colors flex items-center gap-2 ${
-                            currentView === 'logs' ? 'bg-blue-800 text-white' : 'bg-blue-900 text-white'
+                          className={`px-4 py-2 rounded-lg hover:bg-teal-700 transition-colors flex items-center gap-2 ${
+                            currentView === 'logs' ? 'bg-teal-700 text-white' : 'bg-teal-800 text-white'
                           }`}
                         >
                           <Clipboard className="w-5 h-5" />
@@ -2181,7 +2181,7 @@ Check Logs tab for full SMS details.`);
                         </button>
                         <button
                           onClick={() => setShowNewJobForm(true)}
-                          className="px-4 py-2 bg-blue-900 text-white rounded-lg hover:bg-blue-800 transition-colors flex items-center gap-2"
+                          className="px-4 py-2 bg-teal-800 text-white rounded-lg hover:bg-teal-700 transition-colors flex items-center gap-2"
                         >
                           <Plus className="w-5 h-5" />
                           Post New Case
@@ -2231,7 +2231,7 @@ Check Logs tab for full SMS details.`);
                                 value={newJob.patientFirstName || ''}
                                 onChange={(e) => setNewJob({ ...newJob,patientFirstName: e.target.value })}
                                 placeholder="e.g.,John"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                               />
                             </div>
                             <div>
@@ -2244,7 +2244,7 @@ Check Logs tab for full SMS details.`);
                                 value={newJob.patientLastName || ''}
                                 onChange={(e) => setNewJob({ ...newJob,patientLastName: e.target.value })}
                                 placeholder="e.g.,Thompson"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                               />
                             </div>
                             <div>
@@ -2256,7 +2256,7 @@ Check Logs tab for full SMS details.`);
                                 value={newJob.patientId || ''}
                                 onChange={(e) => setNewJob({ ...newJob,patientId: e.target.value })}
                                 placeholder="Auto-generated"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                               />
                             </div>
                           </div>
@@ -2264,7 +2264,7 @@ Check Logs tab for full SMS details.`);
                           </div>
 
                           {/* SERVICE TYPE - This determines what fields show below */}
-                          <div className="bg-teal-50 border-2 border-blue-200 rounded-lg p-4">
+                          <div className="bg-teal-50 border-2 border-teal-200 rounded-lg p-4">
                             <label className="block text-sm font-medium text-indigo-900 mb-1">
                               <span className="text-lg">⚕️</span> Service Type / Skills Required
                             </label>
@@ -2273,7 +2273,7 @@ Check Logs tab for full SMS details.`);
                               value={newJob.skillsRequired}
                               onChange={(e) =>{
                                 setNewJob({ ...newJob,skillsRequired: e.target.value,nonskilledServices: [] });}}
-                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base font-medium"
+                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 text-base font-medium"
                             >
                               <option value="">Select service type...</option>
                               <optgroup label="Skilled Nursing (RN)">
@@ -2306,9 +2306,9 @@ Check Logs tab for full SMS details.`);
                               <label className="block text-sm font-medium text-gray-700 mb-2">
                                 Services Needed (Select all that apply)
                               </label>
-                              <div className="border border-gray-300 rounded-lg p-4 space-y-2 bg-blue-50">
+                              <div className="border border-gray-300 rounded-lg p-4 space-y-2 bg-teal-50">
                                 {nonskilledServices.map(service =>(
-                                  <label key={service} className="flex items-center space-x-3 cursor-pointer hover:bg-blue-100 p-2 rounded">
+                                  <label key={service} className="flex items-center space-x-3 cursor-pointer hover:bg-teal-100 p-2 rounded">
                                     <input
                                       type="checkbox"
                                       checked={newJob.nonskilledServices.includes(service)}
@@ -2317,7 +2317,7 @@ Check Logs tab for full SMS details.`);
                                           setNewJob({ ...newJob,nonskilledServices: [...newJob.nonskilledServices,service] });} else {
                                           setNewJob({ ...newJob,nonskilledServices: newJob.nonskilledServices.filter(s => s !== service) });}
                                       }}
-                                      className="w-4 h-4 text-blue-900 border-gray-300 rounded focus:ring-blue-500"
+                                      className="w-4 h-4 text-teal-800 border-gray-300 rounded focus:ring-teal-500"
                                     />
                                     <span className="text-sm text-gray-700 font-medium">{service}</span>
                                   </label>
@@ -2326,7 +2326,7 @@ Check Logs tab for full SMS details.`);
                               {newJob.nonskilledServices.length > 0 && (
                                 <div className="mt-2 flex flex-wrap gap-2">
                                   {newJob.nonskilledServices.map(service =>(
-                                    <span key={service} className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
+                                    <span key={service} className="px-3 py-1 bg-teal-100 text-teal-700 rounded-full text-sm font-medium">
                                       {service}
                                     </span>
                                   ))}
@@ -2344,7 +2344,7 @@ Check Logs tab for full SMS details.`);
                                 required
                                 value={newJob.city || ''}
                                 onChange={(e) => setNewJob({ ...newJob,city: e.target.value })}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                               >
                                 <option value="">Select city...</option>
                                 {hamptonRoadsCities.map(city =>(
@@ -2383,7 +2383,7 @@ Check Logs tab for full SMS details.`);
                                   required
                                   value={newJob.date}
                                   onChange={(e) => setNewJob({ ...newJob,date: e.target.value })}
-                                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                                 />
                               </div>
                               <div>
@@ -2396,7 +2396,7 @@ Check Logs tab for full SMS details.`);
                                   required
                                   value={newJob.hours}
                                   onChange={(e) => setNewJob({ ...newJob,hours: e.target.value })}
-                                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                                   placeholder="e.g.,1.5"
                                 />
                               </div>
@@ -2416,7 +2416,7 @@ Check Logs tab for full SMS details.`);
                                     required
                                     value={newJob.date}
                                     onChange={(e) => setNewJob({ ...newJob,date: e.target.value })}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                                   />
                                 </div>
                                 <div>
@@ -2429,7 +2429,7 @@ Check Logs tab for full SMS details.`);
                                     required
                                     value={newJob.hoursPerWeek}
                                     onChange={(e) => setNewJob({ ...newJob,hoursPerWeek: e.target.value })}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                                     placeholder="e.g.,20"
                                   />
                                 </div>
@@ -2450,7 +2450,7 @@ Check Logs tab for full SMS details.`);
                                               setNewJob({ ...newJob,daysPerWeek: [...newJob.daysPerWeek,day] });} else {
                                               setNewJob({ ...newJob,daysPerWeek: newJob.daysPerWeek.filter(d => d !== day) });}
                                           }}
-                                          className="w-4 h-4 text-blue-900 border-gray-300 rounded focus:ring-blue-500"
+                                          className="w-4 h-4 text-teal-800 border-gray-300 rounded focus:ring-teal-500"
                                         />
                                         <span className="text-sm text-gray-700">{day}</span>
                                       </label>
@@ -2497,7 +2497,7 @@ Check Logs tab for full SMS details.`);
                                   onBlur={() =>{
                                     setTimeout(() => setShowHospitalDropdown(false),200);}}
                                   placeholder="e.g.,Sentara Obici Hospital"
-                                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                                 />
                                 {showHospitalDropdown && hospitalSuggestions.length > 0 && (
                                   <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
@@ -2507,7 +2507,7 @@ Check Logs tab for full SMS details.`);
                                         type="button"
                                         onClick={() =>{
                                           setNewJob({ ...newJob,referralHospital: hospital });setShowHospitalDropdown(false);}}
-                                        className="w-full text-left px-4 py-2 hover:bg-blue-50 text-sm text-gray-700 transition-colors"
+                                        className="w-full text-left px-4 py-2 hover:bg-teal-50 text-sm text-gray-700 transition-colors"
                                       >
                                         {hospital}
                                       </button>
@@ -2544,7 +2544,7 @@ Check Logs tab for full SMS details.`);
 
                                 setTimeout(() => setShowReferralDropdown(false),200);}}
                               placeholder="e.g.,Dr. Johnson"
-                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                             />
                             {showReferralDropdown && referralSourceSuggestions.length > 0 && (
                               <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
@@ -2554,7 +2554,7 @@ Check Logs tab for full SMS details.`);
                                     type="button"
                                     onClick={() =>{
                                       setNewJob({ ...newJob,referralSource: source });setShowReferralDropdown(false);}}
-                                    className="w-full text-left px-4 py-2 hover:bg-blue-50 text-sm text-gray-700 transition-colors"
+                                    className="w-full text-left px-4 py-2 hover:bg-teal-50 text-sm text-gray-700 transition-colors"
                                   >
                                     {source}
                                   </button>
@@ -2578,7 +2578,7 @@ Check Logs tab for full SMS details.`);
                               value={newJob.payRate}
                               onChange={(e) => setNewJob({ ...newJob,payRate: e.target.value })}
                               placeholder="e.g.,$45/hr"
-                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                             />
                           </div>
 
@@ -2591,14 +2591,14 @@ Check Logs tab for full SMS details.`);
                               value={newJob.description}
                               onChange={(e) => setNewJob({ ...newJob,description: e.target.value })}
                               rows="3"
-                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                             />
                           </div>
 
                           <div className="flex gap-3 pt-4">
                             <button
                               type="submit"
-                              className="flex-1 px-6 py-3 bg-blue-900 text-white rounded-lg hover:bg-blue-800 transition-colors font-medium"
+                              className="flex-1 px-6 py-3 bg-teal-800 text-white rounded-lg hover:bg-teal-700 transition-colors font-medium"
                             >
                               Post Job
                             </button>
@@ -2623,7 +2623,7 @@ Check Logs tab for full SMS details.`);
                       <div className="p-6">
                         <div className="flex items-center justify-between mb-4">
                           <div className="flex items-center gap-3">
-                            <Settings className="w-8 h-8 text-blue-900" />
+                            <Settings className="w-8 h-8 text-teal-800" />
                             <h2 className="text-2xl font-bold text-gray-800">Edit Profile</h2>
                           </div>
                           <button
@@ -2648,7 +2648,7 @@ Check Logs tab for full SMS details.`);
                               required
                               value={editProfileForm.name}
                               onChange={(e) => setEditProfileForm({ ...editProfileForm,name: e.target.value })}
-                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                             />
                           </div>
 
@@ -2659,7 +2659,7 @@ Check Logs tab for full SMS details.`);
                               required
                               value={editProfileForm.email}
                               onChange={(e) => setEditProfileForm({ ...editProfileForm,email: e.target.value })}
-                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                             />
                           </div>
 
@@ -2670,7 +2670,7 @@ Check Logs tab for full SMS details.`);
                               required
                               value={editProfileForm.phone}
                               onChange={(e) => setEditProfileForm({ ...editProfileForm,phone: e.target.value })}
-                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                             />
                           </div>
 
@@ -2684,7 +2684,7 @@ Check Logs tab for full SMS details.`);
                                   type="password"
                                   value={editProfileForm.currentPassword}
                                   onChange={(e) => setEditProfileForm({ ...editProfileForm,currentPassword: e.target.value })}
-                                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                                   placeholder="Enter current password to change"
                                 />
                               </div>
@@ -2696,7 +2696,7 @@ Check Logs tab for full SMS details.`);
                                     type="password"
                                     value={editProfileForm.newPassword}
                                     onChange={(e) => setEditProfileForm({ ...editProfileForm,newPassword: e.target.value })}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                                     placeholder="New password"
                                   />
                                 </div>
@@ -2706,7 +2706,7 @@ Check Logs tab for full SMS details.`);
                                     type="password"
                                     value={editProfileForm.confirmNewPassword}
                                     onChange={(e) => setEditProfileForm({ ...editProfileForm,confirmNewPassword: e.target.value })}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                                     placeholder="Confirm password"
                                   />
                                 </div>
@@ -2741,7 +2741,7 @@ Check Logs tab for full SMS details.`);
                                         type="checkbox"
                                         checked={editProfileForm.certifications.includes(cert)}
                                         onChange={() => toggleEditCertification(cert)}
-                                        className="w-4 h-4 text-blue-900 border-gray-300 rounded focus:ring-blue-500"
+                                        className="w-4 h-4 text-teal-800 border-gray-300 rounded focus:ring-teal-500"
                                       />
                                       <span className="text-sm text-gray-700">{cert}</span>
                                     </label>
@@ -2778,7 +2778,7 @@ Check Logs tab for full SMS details.`);
                                       type="checkbox"
                                       checked={editProfileForm.serviceCities.includes(city)}
                                       onChange={() => toggleEditServiceCity(city)}
-                                      className="w-4 h-4 text-blue-900 border-gray-300 rounded focus:ring-blue-500"
+                                      className="w-4 h-4 text-teal-800 border-gray-300 rounded focus:ring-teal-500"
                                     />
                                     <span className="text-sm text-gray-700">{city}</span>
                                   </label>
@@ -2799,7 +2799,7 @@ Check Logs tab for full SMS details.`);
                           <div className="flex gap-3 pt-4">
                             <button
                               type="submit"
-                              className="flex-1 px-6 py-3 bg-blue-900 text-white rounded-lg hover:bg-blue-800 transition-colors font-medium"
+                              className="flex-1 px-6 py-3 bg-teal-800 text-white rounded-lg hover:bg-teal-700 transition-colors font-medium"
                             >
                               Save Changes
                             </button>
@@ -2907,11 +2907,11 @@ Check Logs tab for full SMS details.`);
                               </div>
 
                               {passwordResetForm.employeeId && (
-                                <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                                  <p className="text-sm text-blue-800">
+                                <div className="p-3 bg-teal-50 border border-teal-200 rounded-lg">
+                                  <p className="text-sm text-teal-700">
                                     <strong>Current Employee:</strong> {employees.find(e => e.id === passwordResetForm.employeeId)?.name}
                                   </p>
-                                  <p className="text-sm text-blue-800">
+                                  <p className="text-sm text-teal-700">
                                     <strong>Email:</strong> {employees.find(e => e.id === passwordResetForm.employeeId)?.email}
                                   </p>
                                 </div>
@@ -2969,10 +2969,10 @@ Check Logs tab for full SMS details.`);
                             <p className="text-sm text-teal-700">Completed on {new Date(selectedJobDetails.completedAt).toLocaleDateString()}</p>
                           </div>
                         ) : selectedJobDetails.assignedTo ? (
-                          <div className="mb-6 p-5 bg-blue-50 border border-blue-200 rounded-lg">
+                          <div className="mb-6 p-5 bg-teal-50 border border-teal-200 rounded-lg">
                             <div className="flex items-start justify-between">
                               <div className="flex-1">
-                                <p className="text-blue-900 font-bold text-lg mb-2">✓ Assigned Employee</p>
+                                <p className="text-teal-800 font-bold text-lg mb-2">✓ Assigned Employee</p>
                                 <button
                                   onClick={() => {
                                     const fullEmployee = employees.find(e => e.id === selectedJobDetails.assignedTo.id);
@@ -2980,7 +2980,7 @@ Check Logs tab for full SMS details.`);
                                       setSelectedEmployeeProfile(fullEmployee);
                                     }
                                   }}
-                                  className="text-lg font-semibold text-gray-900 hover:text-blue-900 hover:underline transition-colors text-left"
+                                  className="text-lg font-semibold text-gray-900 hover:text-teal-800 hover:underline transition-colors text-left"
                                 >
                                   {selectedJobDetails.assignedTo.name}
                                 </button>
@@ -3030,7 +3030,7 @@ Check Logs tab for full SMS details.`);
                                             setSelectedEmployeeProfile(fullEmployee);
                                           }
                                         }}
-                                        className="text-lg font-bold text-gray-900 hover:text-blue-900 hover:underline transition-colors text-left"
+                                        className="text-lg font-bold text-gray-900 hover:text-teal-800 hover:underline transition-colors text-left"
                                       >
                                         {emp.name}
                                       </button>
@@ -3048,7 +3048,7 @@ Check Logs tab for full SMS details.`);
                                     <div className="ml-4 flex flex-col gap-2">
                                       <a
                                         href={`tel:${emp.phone}`}
-                                        className="px-4 py-2 bg-blue-900 text-white hover:bg-blue-800 rounded-lg text-sm font-medium text-center whitespace-nowrap"
+                                        className="px-4 py-2 bg-teal-800 text-white hover:bg-teal-700 rounded-lg text-sm font-medium text-center whitespace-nowrap"
                                       >
                                         📞 Call Now
                                       </a>
@@ -3059,7 +3059,7 @@ Check Logs tab for full SMS details.`);
                                             setSelectedJobDetails(null);
                                           }
                                         }}
-                                        className="px-4 py-2 bg-blue-900 text-white hover:bg-blue-800 rounded-lg text-sm font-medium whitespace-nowrap"
+                                        className="px-4 py-2 bg-teal-800 text-white hover:bg-teal-700 rounded-lg text-sm font-medium whitespace-nowrap"
                                       >
                                         ✓ Assign Case
                                       </button>
@@ -3100,7 +3100,7 @@ Check Logs tab for full SMS details.`);
                         </div>
 
                         {selectedJobDetails.description && (
-                          <div className="mb-6 p-4 bg-blue-50 rounded-lg">
+                          <div className="mb-6 p-4 bg-teal-50 rounded-lg">
                             <p className="text-sm text-gray-500 mb-1">Description</p>
                             <p className="text-gray-800">{selectedJobDetails.description}</p>
                           </div>
@@ -3148,7 +3148,7 @@ Check Logs tab for full SMS details.`);
                                     setSelectedJobDetails(null);
                                   }
                                 }}
-                                className="px-6 py-3 bg-blue-900 text-white rounded-lg hover:bg-blue-800 transition-colors font-medium flex items-center justify-center gap-2"
+                                className="px-6 py-3 bg-teal-800 text-white rounded-lg hover:bg-teal-700 transition-colors font-medium flex items-center justify-center gap-2"
                               >
                                 <span>✓</span>
                                 Mark as Completed
@@ -3219,7 +3219,7 @@ Check Logs tab for full SMS details.`);
                           <div className="text-sm text-gray-500">Open Cases</div>
                           <div className="text-4xl">📋</div>
                         </div>
-                        <div className="text-4xl font-bold text-blue-900">
+                        <div className="text-4xl font-bold text-teal-800">
                           {jobs ? jobs.filter(j =>(!j.assignedTo || !j.assignedTo.id) && !j.completedAt).length : 0}
                         </div>
                         <div className="text-xs text-gray-500 mt-1">Awaiting assignment</div>
@@ -3230,7 +3230,7 @@ Check Logs tab for full SMS details.`);
                           <div className="text-sm text-gray-500">Assigned Cases</div>
                           <Check className="w-8 h-8 text-blue-200" />
                         </div>
-                        <div className="text-4xl font-bold text-blue-600">
+                        <div className="text-4xl font-bold text-teal-600">
                           {jobs ? jobs.filter(j => j.assignedTo && j.assignedTo.id && !j.completedAt).length : 0}
                         </div>
                         <div className="text-xs text-gray-500 mt-1">Currently being worked</div>
@@ -3241,7 +3241,7 @@ Check Logs tab for full SMS details.`);
                           <div className="text-sm text-gray-500">Completed Cases</div>
                           <div className="text-4xl">✓</div>
                         </div>
-                        <div className="text-4xl font-bold text-blue-900">
+                        <div className="text-4xl font-bold text-teal-800">
                           {archivedJobs ? archivedJobs.length : 0}
                         </div>
                         <div className="text-xs text-gray-500 mt-1">Closed cases</div>
@@ -3278,8 +3278,8 @@ Check Logs tab for full SMS details.`);
                                     onClick={() => setSelectedJobDetails(job)}
                                     className={`border-b cursor-pointer transition-colors ${
                                       job.completedAt 
-                                        ? 'bg-teal-50 hover:bg-blue-100' 
-                                        : 'hover:bg-blue-50'
+                                        ? 'bg-teal-50 hover:bg-teal-100' 
+                                        : 'hover:bg-teal-50'
                                     }`}
                                   >
                                     <td className="py-3 px-4 text-sm font-medium text-gray-800">
@@ -3308,7 +3308,7 @@ Check Logs tab for full SMS details.`);
                                           COMPLETED
                                         </span>
                                       ) : job.assignedTo ? (
-                                        <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">
+                                        <span className="px-2 py-1 bg-teal-100 text-teal-700 rounded-full text-xs font-semibold">
                                           ASSIGNED
                                         </span>
                                       ) : (
@@ -3345,7 +3345,7 @@ Check Logs tab for full SMS details.`);
                           <div className="text-sm text-gray-500">Total Employees</div>
                           <Users className="w-8 h-8 text-indigo-200" />
                         </div>
-                        <div className="text-4xl font-bold text-blue-900">
+                        <div className="text-4xl font-bold text-teal-800">
                           {employees ? employees.filter(e => e.role !== 'Admin').length : 0}
                         </div>
                         <div className="text-xs text-gray-500 mt-1">Active workforce</div>
@@ -3356,7 +3356,7 @@ Check Logs tab for full SMS details.`);
                           <div className="text-sm text-gray-500">RNs</div>
                           <div className="text-4xl">👨‍⚕️</div>
                         </div>
-                        <div className="text-4xl font-bold text-blue-600">
+                        <div className="text-4xl font-bold text-teal-600">
                           {employees ? employees.filter(e => e.role === 'RN').length : 0}
                         </div>
                         <div className="text-xs text-gray-500 mt-1">Registered Nurses</div>
@@ -3367,7 +3367,7 @@ Check Logs tab for full SMS details.`);
                           <div className="text-sm text-gray-500">PCAs/CNAs</div>
                           <div className="text-4xl">🏥</div>
                         </div>
-                        <div className="text-4xl font-bold text-blue-900">
+                        <div className="text-4xl font-bold text-teal-800">
                           {employees ? employees.filter(e => e.role === 'PCA' || e.role === 'CNA').length : 0}
                         </div>
                         <div className="text-xs text-gray-500 mt-1">Personal care aides</div>
@@ -3378,7 +3378,7 @@ Check Logs tab for full SMS details.`);
                           <div className="text-sm text-gray-500">Therapists</div>
                           <div className="text-4xl">🦾</div>
                         </div>
-                        <div className="text-4xl font-bold text-blue-900">
+                        <div className="text-4xl font-bold text-teal-800">
                           {employees ? employees.filter(e => e.role === 'PT' || e.role === 'OT').length : 0}
                         </div>
                         <div className="text-xs text-gray-500 mt-1">PT & OT staff</div>
@@ -3410,7 +3410,7 @@ Check Logs tab for full SMS details.`);
                                   <tr
                                     key={emp.id}
                                     onClick={() => setSelectedEmployeeProfile(emp)}
-                                    className={`border-b hover:bg-blue-50 cursor-pointer transition-colors ${!isActive ? 'opacity-50 bg-red-50' : ''}`}
+                                    className={`border-b hover:bg-teal-50 cursor-pointer transition-colors ${!isActive ? 'opacity-50 bg-red-50' : ''}`}
                                   >
                                     <td className="py-3 px-4 text-sm font-medium text-gray-800">{emp.name}</td>
                                     <td className="py-3 px-4 text-sm text-gray-600">{emp.role}</td>
@@ -3432,10 +3432,10 @@ Check Logs tab for full SMS details.`);
                                       ) : 'None'}
                                     </td>
                                     <td className="py-3 px-4 text-sm">
-                                      <span className="font-semibold text-blue-600">{activeJobs.length}</span>
+                                      <span className="font-semibold text-teal-600">{activeJobs.length}</span>
                                     </td>
                                     <td className="py-3 px-4 text-sm">
-                                      <span className="font-semibold text-blue-900">{completedJobs.length}</span>
+                                      <span className="font-semibold text-teal-800">{completedJobs.length}</span>
                                     </td>
                                     <td className="py-3 px-4 text-sm text-gray-600">
                                       {referralSources.length > 0 ? referralSources.slice(0,2).join(',') : 'N/A'}
@@ -3555,7 +3555,7 @@ Check Logs tab for full SMS details.`);
                           <h3 className="text-lg font-semibold text-gray-800 mb-3">Service Cities</h3>
                           <div className="flex flex-wrap gap-2">
                             {selectedEmployeeProfile.serviceCities?.map((city,idx) =>(
-                              <span key={idx} className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">
+                              <span key={idx} className="px-3 py-1 bg-teal-100 text-teal-700 rounded-full text-sm">
                                 {city}
                               </span>
                             ))}
@@ -3585,7 +3585,7 @@ Check Logs tab for full SMS details.`);
                     {/* Password Reset Section */}
                     <div className="bg-white rounded-lg shadow-lg p-6">
                       <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-                        <Key className="w-6 h-6 text-blue-900" />
+                        <Key className="w-6 h-6 text-teal-800" />
                         Reset Employee Password
                       </h3>
                       <div className="max-w-xl">
@@ -3595,7 +3595,7 @@ Check Logs tab for full SMS details.`);
                             <select
                               value={passwordResetForm.employeeId}
                               onChange={(e) => setPasswordResetForm({ ...passwordResetForm, employeeId: e.target.value })}
-                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                             >
                               <option value="">Choose an employee...</option>
                               {employees.filter(e => e.role !== 'Admin').map(emp => (
@@ -3615,7 +3615,7 @@ Check Logs tab for full SMS details.`);
                               handleForgotPasswordReset(emp.email, emp.name);
                               setPasswordResetForm({ employeeId: '', newPassword: '', confirmPassword: '' });
                             }}
-                            className="px-6 py-2 bg-blue-900 text-white rounded-lg font-semibold hover:bg-blue-800 transition-colors"
+                            className="px-6 py-2 bg-teal-800 text-white rounded-lg font-semibold hover:bg-teal-700 transition-colors"
                           >
                             Send Password Reset
                           </button>
@@ -3794,7 +3794,7 @@ Check Logs tab for full SMS details.`);
                             </p>
                             <button
                               onClick={() => setShowMyJobs(false)}
-                              className="mt-4 px-6 py-2 bg-blue-900 text-white rounded-lg hover:bg-blue-800 transition-colors"
+                              className="mt-4 px-6 py-2 bg-teal-800 text-white rounded-lg hover:bg-teal-700 transition-colors"
                             >
                               View Available Jobs
                             </button>
@@ -3809,7 +3809,7 @@ Check Logs tab for full SMS details.`);
                               <div className="flex items-center justify-between">
                                 <div>
                                   <p className="text-gray-500 text-sm">Active Cases</p>
-                                  <p className="text-3xl font-bold text-blue-900">{myActiveJobs.length}</p>
+                                  <p className="text-3xl font-bold text-teal-800">{myActiveJobs.length}</p>
                                   <p className="text-xs text-gray-500 mt-1">Assigned to you</p>
                                 </div>
                                 <Check className="w-12 h-12 text-green-200" />
@@ -3820,7 +3820,7 @@ Check Logs tab for full SMS details.`);
                               <div className="flex items-center justify-between">
                                 <div>
                                   <p className="text-gray-500 text-sm">Completed Cases</p>
-                                  <p className="text-3xl font-bold text-blue-900">{myCompletedJobs.length}</p>
+                                  <p className="text-3xl font-bold text-teal-800">{myCompletedJobs.length}</p>
                                   <p className="text-xs text-gray-500 mt-1">Finished work</p>
                                 </div>
                                 <Check className="w-12 h-12 text-teal-200" />
@@ -3833,7 +3833,7 @@ Check Logs tab for full SMS details.`);
                             <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-6">
                               <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-6 border-b border-green-200">
                                 <h3 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-                                  <Check className="w-6 h-6 text-blue-900" />
+                                  <Check className="w-6 h-6 text-teal-800" />
                                   Active Cases ({myActiveJobs.length})
                                 </h3>
                                 <p className="text-sm text-gray-600 mt-1">
@@ -3854,7 +3854,7 @@ Check Logs tab for full SMS details.`);
                                           {job.skillsRequired === 'PCA Services' && job.nonskilledServices && job.nonskilledServices.length > 0 && (
                                             <div className="flex flex-wrap gap-1 mt-2">
                                               {job.nonskilledServices.map(service =>(
-                                                <span key={service} className="px-2 py-1 bg-blue-50 text-blue-700 rounded text-xs border border-blue-200">
+                                                <span key={service} className="px-2 py-1 bg-teal-50 text-teal-700 rounded text-xs border border-teal-200">
                                                   {service}
                                                 </span>
                                               ))}
@@ -3872,7 +3872,7 @@ Check Logs tab for full SMS details.`);
                                             </p>
                                           )}
                                         </div>
-                                        <span className="px-3 py-1 bg-blue-900 text-white rounded-full text-xs font-semibold">
+                                        <span className="px-3 py-1 bg-teal-800 text-white rounded-full text-xs font-semibold">
                                           ACTIVE
                                         </span>
                                       </div>
@@ -3888,7 +3888,7 @@ Check Logs tab for full SMS details.`);
                             <>
                               <div className="bg-gradient-to-r from-purple-50 to-teal-50 rounded-lg p-4 mb-4">
                                 <h3 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-                                  <Check className="w-6 h-6 text-blue-900" />
+                                  <Check className="w-6 h-6 text-teal-800" />
                                   Completed Work
                                 </h3>
                                 <p className="text-sm text-gray-600 mt-1">
@@ -3923,7 +3923,7 @@ Check Logs tab for full SMS details.`);
                                   </div>
                                   <div className="text-right">
                                     <div className="text-center">
-                                      <div className="text-2xl font-bold text-blue-900">{patient.jobs.length}</div>
+                                      <div className="text-2xl font-bold text-teal-800">{patient.jobs.length}</div>
                                       <div className="text-xs text-gray-500">Visits</div>
                                     </div>
                                   </div>
@@ -3939,7 +3939,7 @@ Check Logs tab for full SMS details.`);
                                         <div className="flex items-start justify-between mb-2">
                                           <div className="flex-1">
                                             <div className="flex items-center gap-2 mb-2">
-                                              <Calendar className="w-4 h-4 text-blue-900" />
+                                              <Calendar className="w-4 h-4 text-teal-800" />
                                               <span className="font-semibold text-gray-800">
                                                 {new Date(visit.date).toLocaleDateString('en-US',{
                                                   weekday: 'short',year: 'numeric',month: 'short',day: 'numeric'
@@ -4056,7 +4056,7 @@ Check Logs tab for full SMS details.`);
                               <div className="flex items-center justify-between">
                                 <div>
                                   <p className="text-gray-500 text-sm">Total Sources</p>
-                                  <p className="text-3xl font-bold text-blue-900">{totalSources}</p>
+                                  <p className="text-3xl font-bold text-teal-800">{totalSources}</p>
                                   <p className="text-xs text-gray-500 mt-1">{activeSources} active</p>
                                 </div>
                                 <Users className="w-12 h-12 text-indigo-200" />
@@ -4067,7 +4067,7 @@ Check Logs tab for full SMS details.`);
                               <div className="flex items-center justify-between">
                                 <div>
                                   <p className="text-gray-500 text-sm">Total Referrals</p>
-                                  <p className="text-3xl font-bold text-blue-900">{totalReferrals}</p>
+                                  <p className="text-3xl font-bold text-teal-800">{totalReferrals}</p>
                                   <p className="text-xs text-gray-500 mt-1">All time</p>
                                 </div>
                                 <Briefcase className="w-12 h-12 text-green-200" />
@@ -4078,7 +4078,7 @@ Check Logs tab for full SMS details.`);
                               <div className="flex items-center justify-between">
                                 <div>
                                   <p className="text-gray-500 text-sm">Top Source</p>
-                                  <p className="text-lg font-bold text-blue-900 truncate">{topSource.name}</p>
+                                  <p className="text-lg font-bold text-teal-800 truncate">{topSource.name}</p>
                                   <p className="text-xs text-gray-500 mt-1">{topSource.totalReferrals} referrals</p>
                                 </div>
                                 <Star className="w-12 h-12 text-teal-200" />
@@ -4100,7 +4100,7 @@ Check Logs tab for full SMS details.`);
                               <div className="flex items-center justify-between">
                                 <div>
                                   <p className="text-gray-500 text-sm">Total Active Patients</p>
-                                  <p className="text-3xl font-bold text-blue-900">{referralSources.reduce((sum, s) => sum + s.activePatients, 0)}</p>
+                                  <p className="text-3xl font-bold text-teal-800">{referralSources.reduce((sum, s) => sum + s.activePatients, 0)}</p>
                                   <p className="text-xs text-gray-500 mt-1">Across all sources</p>
                                 </div>
                                 <Briefcase className="w-12 h-12 text-blue-200" />
@@ -4131,14 +4131,14 @@ Check Logs tab for full SMS details.`);
                                            'Inactive'}
                                         </span>
                                         <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                                          source.primaryType === 'ongoing' ? 'bg-teal-100 text-teal-700' : 'bg-blue-100 text-blue-700'
+                                          source.primaryType === 'ongoing' ? 'bg-teal-100 text-teal-700' : 'bg-teal-100 text-teal-700'
                                         }`}>
                                           {source.primaryType === 'ongoing' ? 'Ongoing Care' : 'Skilled Care'}
                                         </span>
                                       </div>
                                     </div>
                                     <div className="text-right">
-                                      <div className="text-3xl font-bold text-blue-900">{source.totalReferrals}</div>
+                                      <div className="text-3xl font-bold text-teal-800">{source.totalReferrals}</div>
                                       <div className="text-sm text-gray-500">Total Referrals</div>
                                     </div>
                                   </div>
@@ -4150,9 +4150,9 @@ Check Logs tab for full SMS details.`);
                                     </div>
                                     <div>
                                       <p className="text-sm text-gray-500">Active Patients</p>
-                                      <p className="text-lg font-semibold text-blue-900">{source.activePatients}</p>
+                                      <p className="text-lg font-semibold text-teal-800">{source.activePatients}</p>
                                       {source.activePCAPatients > 0 && (
-                                        <p className="text-xs text-blue-900 font-medium">
+                                        <p className="text-xs text-teal-800 font-medium">
                                           {source.activePCAPatients} ongoing PCA
                                         </p>
                                       )}
@@ -4186,7 +4186,7 @@ Check Logs tab for full SMS details.`);
                                       {Object.entries(source.serviceTypes)
                                         .sort((a,b) => b[1] - a[1])
                                         .map(([type,count]) =>(
-                                          <span key={type} className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs border border-blue-200">
+                                          <span key={type} className="px-3 py-1 bg-teal-50 text-teal-700 rounded-full text-xs border border-teal-200">
                                             {type} ({count})
                                           </span>
                                         ))}
@@ -4221,7 +4221,7 @@ Check Logs tab for full SMS details.`);
                   {/* Search & Filter Section */}
                   <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
                     <div className="flex items-center gap-3 mb-4">
-                      <Search className="w-6 h-6 text-blue-900" />
+                      <Search className="w-6 h-6 text-teal-800" />
                       <h3 className="text-xl font-bold text-gray-800">Search & Filter Jobs</h3>
                       {hasActiveFilters() && (
                         <button
@@ -4242,7 +4242,7 @@ Check Logs tab for full SMS details.`);
                           value={searchTerm}
                           onChange={(e) => setSearchTerm(e.target.value)}
                           placeholder="Search by patient ID,initials,location,or service type..."
-                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                         />
                       </div>
                     </div>
@@ -4255,7 +4255,7 @@ Check Logs tab for full SMS details.`);
                         <select
                           value={filterStatus}
                           onChange={(e) => setFilterStatus(e.target.value)}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                         >
                           <option value="all">All Statuses</option>
                           <option value="open">Open Only</option>
@@ -4271,7 +4271,7 @@ Check Logs tab for full SMS details.`);
                         <select
                           value={filterCity}
                           onChange={(e) => setFilterCity(e.target.value)}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                         >
                           <option value="all">All Cities</option>
                           {hamptonRoadsCities.map(city =>(
@@ -4286,7 +4286,7 @@ Check Logs tab for full SMS details.`);
                         <select
                           value={filterServiceType}
                           onChange={(e) => setFilterServiceType(e.target.value)}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                         >
                           <option value="all">All Services</option>
                           <option value="RN">RN Services</option>
@@ -4304,13 +4304,13 @@ Check Logs tab for full SMS details.`);
                             type="date"
                             value={filterDateRange.start}
                             onChange={(e) => setFilterDateRange({ ...filterDateRange,start: e.target.value })}
-                            className="flex-1 px-2 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                            className="flex-1 px-2 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
                           />
                           <input
                             type="date"
                             value={filterDateRange.end}
                             onChange={(e) => setFilterDateRange({ ...filterDateRange,end: e.target.value })}
-                            className="flex-1 px-2 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                            className="flex-1 px-2 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
                           />
                         </div>
                       </div>
@@ -4334,7 +4334,7 @@ Check Logs tab for full SMS details.`);
                           {currentView === 'admin' && (
                             <button
                               onClick={() => setShowNewJobForm(true)}
-                              className="mt-4 px-6 py-2 bg-blue-900 text-white rounded-lg hover:bg-blue-800 transition-colors"
+                              className="mt-4 px-6 py-2 bg-teal-800 text-white rounded-lg hover:bg-teal-700 transition-colors"
                             >
                               Post Your First Job
                             </button>
@@ -4358,7 +4358,7 @@ Check Logs tab for full SMS details.`);
                           {hasActiveFilters() && (
                             <button
                               onClick={clearAllFilters}
-                              className="mt-4 px-6 py-2 bg-blue-900 text-white rounded-lg hover:bg-blue-800 transition-colors"
+                              className="mt-4 px-6 py-2 bg-teal-800 text-white rounded-lg hover:bg-teal-700 transition-colors"
                             >
                               Clear All Filters
                             </button>
@@ -4376,7 +4376,7 @@ Check Logs tab for full SMS details.`);
                           </p>
                           <button
                             onClick={clearAllFilters}
-                            className="mt-4 px-6 py-2 bg-blue-900 text-white rounded-lg hover:bg-blue-800 transition-colors"
+                            className="mt-4 px-6 py-2 bg-teal-800 text-white rounded-lg hover:bg-teal-700 transition-colors"
                           >
                             Clear All Filters
                           </button>
@@ -4386,7 +4386,7 @@ Check Logs tab for full SMS details.`);
                     const resultsHeader = (
                       <div className="mb-4 flex items-center justify-between">
                         <p className="text-gray-600">
-                          Showing <span className="font-semibold text-blue-900">{filteredJobs.length}</span> job{filteredJobs.length !== 1 ? 's' : ''}
+                          Showing <span className="font-semibold text-teal-800">{filteredJobs.length}</span> job{filteredJobs.length !== 1 ? 's' : ''}
                           {hasActiveFilters() && <span className="text-sm ml-2">(filtered)</span>}
                         </p>
                       </div>
@@ -4414,7 +4414,7 @@ Check Logs tab for full SMS details.`);
                                   </span>
                                 )}
                                 {!job.completedAt && job.signedUp && job.signedUp.length > 0 ? (
-                                  <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">
+                                  <span className="px-2 py-1 bg-teal-100 text-teal-700 rounded-full text-xs font-semibold">
                                     ASSIGNED
                                   </span>
                                 ) : !job.completedAt ? (
@@ -4450,7 +4450,7 @@ Check Logs tab for full SMS details.`);
                                       href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(job.location)}`}
                                       target="_blank"
                                       rel="noopener noreferrer"
-                                      className="text-sm hover:text-blue-900 hover:underline flex items-center gap-1"
+                                      className="text-sm hover:text-teal-800 hover:underline flex items-center gap-1"
                                     >
                                       {job.location}
                                       <ExternalLink className="w-3 h-3" />
@@ -4484,7 +4484,7 @@ Check Logs tab for full SMS details.`);
                               </div>
                             </div>
                             <div className="text-right">
-                              <div className="text-2xl font-bold text-blue-900">{job.payRate}</div>
+                              <div className="text-2xl font-bold text-teal-800">{job.payRate}</div>
                               <div className="text-sm text-gray-500">Pay Rate</div>
                             </div>
                           </div>
@@ -4494,14 +4494,14 @@ Check Logs tab for full SMS details.`);
                             <div className="space-y-1">
                               <div className="flex items-center gap-2">
                                 <span className="text-sm font-medium text-gray-700">Service Type:</span>
-                                <span className="text-sm text-blue-900 font-semibold">{job.skillsRequired}</span>
+                                <span className="text-sm text-teal-800 font-semibold">{job.skillsRequired}</span>
                               </div>
                               {job.skillsRequired === 'PCA Services' && job.nonskilledServices && job.nonskilledServices.length > 0 && (
                                 <div className="mt-2">
                                   <span className="text-sm font-medium text-gray-700">Services Needed:</span>
                                   <div className="flex flex-wrap gap-2 mt-1">
                                     {job.nonskilledServices.map(service =>(
-                                      <span key={service} className="px-2 py-1 bg-blue-50 text-blue-700 rounded text-xs border border-blue-200">
+                                      <span key={service} className="px-2 py-1 bg-teal-50 text-teal-700 rounded text-xs border border-teal-200">
                                         {service}
                                       </span>
                                     ))}
@@ -4532,10 +4532,10 @@ Check Logs tab for full SMS details.`);
 
                           {currentView === 'admin' && (
                             <>
-                              <div className="mb-4 p-3 bg-blue-50 rounded-lg">
+                              <div className="mb-4 p-3 bg-teal-50 rounded-lg">
                                 <div className="flex items-center gap-2">
-                                  <MessageSquare className="w-4 h-4 text-blue-600" />
-                                  <span className="text-sm text-blue-800">
+                                  <MessageSquare className="w-4 h-4 text-teal-600" />
+                                  <span className="text-sm text-teal-700">
                                     SMS sent to {employees.filter(emp => emp.role !== 'Admin' && canEmployeePerformService(emp,job.skillsRequired,job.location)).length} qualified employee(s)
                                   </span>
                                 </div>
@@ -4544,7 +4544,7 @@ Check Logs tab for full SMS details.`);
                                 {!job.completedAt && (
                                   <button
                                     onClick={() => setSelectedJobDetails(job)}
-                                    className="w-full px-4 py-2 bg-blue-900 text-white rounded-lg hover:bg-blue-800 transition-colors font-medium"
+                                    className="w-full px-4 py-2 bg-teal-800 text-white rounded-lg hover:bg-teal-700 transition-colors font-medium"
                                   >
                                     📋 View Details & Add Visits
                                   </button>
@@ -4556,7 +4556,7 @@ Check Logs tab for full SMS details.`);
                                   <select
                                     value={job.status || 'active'}
                                     onChange={(e) => handleAdminChangeJobStatus(job.id,e.target.value)}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                                   >
                                     <option value="active">Active</option>
                                     <option value="paused">Paused</option>
@@ -4567,14 +4567,14 @@ Check Logs tab for full SMS details.`);
 
                                 {/* Interested Employees Section */}
                                 {(job.interestedEmployees && job.interestedEmployees.length > 0) && (
-                                  <div className="mb-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                                  <div className="mb-4 p-4 bg-teal-50 rounded-lg border border-teal-200">
                                     <h3 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
-                                      <span className="text-blue-600">⭐</span>
+                                      <span className="text-teal-600">⭐</span>
                                       {job.interestedEmployees.length} Employee(s) Interested
                                     </h3>
                                     <div className="space-y-3">
                                       {job.interestedEmployees.map(emp =>(
-                                        <div key={emp.id} className="bg-white p-3 rounded border border-blue-200">
+                                        <div key={emp.id} className="bg-white p-3 rounded border border-teal-200">
                                           <div className="flex items-start justify-between">
                                             <div className="flex-1">
                                               <p className="font-semibold text-gray-800">{emp.name}</p>
@@ -4582,7 +4582,7 @@ Check Logs tab for full SMS details.`);
                                               <p className="text-sm text-gray-600">{emp.email}</p>
                                               <p className="text-xs text-gray-500 mt-1">Certs: {emp.certifications}</p>
                                               {emp.specializations && emp.specializations.length > 0 && (
-                                                <p className="text-xs text-blue-900 mt-1">Specializations: {emp.specializations.join(',')}</p>
+                                                <p className="text-xs text-teal-800 mt-1">Specializations: {emp.specializations.join(',')}</p>
                                               )}
                                               <p className="text-xs text-gray-400 mt-1">Interested: {new Date(emp.interestedAt).toLocaleString()}</p>
                                             </div>
@@ -4595,7 +4595,7 @@ Check Logs tab for full SMS details.`);
                                               </a>
                                               <button
                                                 onClick={() => handleAdminAssignJob(job.id,emp.id)}
-                                                className="px-3 py-1 bg-blue-900 text-white hover:bg-blue-800 rounded text-sm font-medium"
+                                                className="px-3 py-1 bg-teal-800 text-white hover:bg-teal-700 rounded text-sm font-medium"
                                               >
                                                 ✓ Assign
                                               </button>
@@ -4611,7 +4611,7 @@ Check Logs tab for full SMS details.`);
                                 {job.assignedTo && (
                                   <div className="mb-4 p-4 bg-teal-50 rounded-lg border border-purple-200">
                                     <h3 className="font-semibold text-gray-800 mb-2 flex items-center gap-2">
-                                      <span className="text-blue-900">✓</span>
+                                      <span className="text-teal-800">✓</span>
                                       Assigned to:
                                     </h3>
                                     <div className="bg-white p-3 rounded border border-purple-200">
@@ -4634,7 +4634,7 @@ Check Logs tab for full SMS details.`);
                                   ) : (
                                     <button
                                       onClick={() => handleArchiveJob(job.id)}
-                                      className="flex-1 px-4 py-2 bg-blue-900 text-white rounded-lg hover:bg-blue-800 transition-colors font-medium"
+                                      className="flex-1 px-4 py-2 bg-teal-800 text-white rounded-lg hover:bg-teal-700 transition-colors font-medium"
                                     >
                                       ✓ Mark Complete
                                     </button>
@@ -4660,13 +4660,13 @@ Check Logs tab for full SMS details.`);
                               ) : !isInterested ? (
                                 <button
                                   onClick={() => handleExpressInterest(job.id)}
-                                  className="flex-1 px-6 py-3 bg-blue-900 text-white rounded-lg hover:bg-blue-800 transition-colors font-medium flex items-center justify-center gap-2"
+                                  className="flex-1 px-6 py-3 bg-teal-800 text-white rounded-lg hover:bg-teal-700 transition-colors font-medium flex items-center justify-center gap-2"
                                 >
                                   ⭐ I'm Interested
                                 </button>
                               ) : (
                                 <>
-                                  <div className="flex-1 px-6 py-3 bg-blue-100 text-blue-800 rounded-lg font-medium flex items-center justify-center gap-2">
+                                  <div className="flex-1 px-6 py-3 bg-teal-100 text-teal-700 rounded-lg font-medium flex items-center justify-center gap-2">
                                     <Check className="w-5 h-5" />
                                     Interest Expressed
                                   </div>
