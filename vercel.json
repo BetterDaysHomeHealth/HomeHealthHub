@@ -1,6 +1,7 @@
 {
   "rewrites": [
     { "source": "/", "destination": "/homecarehub-src/index.html" },
+    { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/(.*)", "destination": "/homecarehub-src/$1" }
   ]
 }

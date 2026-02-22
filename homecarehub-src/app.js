@@ -795,12 +795,28 @@ const [searchTerm,setSearchTerm] = useState('');const [filterStatus,setFilterSta
               };const updatedLog = [logEntry,...existingLog].slice(0,100);await window.storage.set('activity-log',JSON.stringify(updatedLog));setActivityLog(updatedLog);} catch (error) {
               console.error('Error logging activity:',error);}
           };const sendSMSNotification = async (phoneNumber,message,jobId,employeeId) =>{
+            let status = 'failed';
             try {
-
+              const response = await fetch('/api/send-sms', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ to: phoneNumber, message }),
+              });
+              const result = await response.json();
+              if (response.ok && result.success) {
+                status = 'sent';
+                console.log(`SMS sent to ${phoneNumber}: ${message}`);
+              } else {
+                console.error(`SMS failed for ${phoneNumber}:`, result.error);
+              }
+            } catch (error) {
+              console.error('Error sending SMS:', error);
+            }
+            try {
               const smsLogResult = await window.storage.get('sms-log').catch(() => null);const smsLog = smsLogResult ? JSON.parse(smsLogResult.value) : [];const smsRecord = {
-                id: Date.now().toString() + Math.random(),phoneNumber,message,jobId,employeeId,timestamp: new Date().toISOString(),status: 'sent'
-              };smsLog.push(smsRecord);await window.storage.set('sms-log',JSON.stringify(smsLog));setSmsLog(smsLog);console.log(`SMS sent to ${phoneNumber}: ${message}`);} catch (error) {
-              console.error('Error sending SMS:',error);}
+                id: Date.now().toString() + Math.random(),phoneNumber,message,jobId,employeeId,timestamp: new Date().toISOString(),status
+              };smsLog.push(smsRecord);await window.storage.set('sms-log',JSON.stringify(smsLog));setSmsLog(smsLog);} catch (error) {
+              console.error('Error logging SMS:',error);}
           };
 
           // Check for training due dates and send notifications
