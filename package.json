@@ -1,0 +1,16 @@
+{
+  "name": "home-health-hub",
+  "version": "1.0.0",
+  "description": "Home Health Staffing Platform",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "vercel build"
+  },
+  "keywords": ["home health", "staffing"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "firebase-admin": "^12.0.0"
+  }
+}
