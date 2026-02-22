@@ -1211,6 +1211,7 @@ function HealthCareJobBoard() {
   const [showNewJobForm, setShowNewJobForm] = useState(false);
   const [selectedJobDetails, setSelectedJobDetails] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isCreatingJob, setIsCreatingJob] = useState(false);
   const [authView, setAuthView] = useState("login"); // 'login','signup',or 'app'
   const [currentUser, setCurrentUser] = useState(null);
   const [loginForm, setLoginForm] = useState({ email: "", password: "" });
@@ -1551,95 +1552,110 @@ function HealthCareJobBoard() {
   };
   const handleCreateJob = async (e) => {
     e.preventDefault();
-    const patientId = newJob.patientId || generatePatientId();
-    const patientInitials = getPatientInitials(
-      newJob.patientFirstName,
-      newJob.patientLastName,
-    );
-    const fullLocation = `${newJob.address}, ${newJob.city}, VA${newJob.zip ? " " + newJob.zip : ""}`;
-    const job = {
-      id: Date.now().toString(),
-      patientFirstName: newJob.patientFirstName,
-      patientLastName: newJob.patientLastName,
-      patientId: patientId,
-      location: fullLocation,
-      city: newJob.city,
-      zip: newJob.zip || "",
-      address: newJob.address,
-      date: newJob.date,
-      hours:
-        newJob.skillsRequired === "PCA Services"
-          ? parseFloat(newJob.hoursPerWeek || 0)
-          : parseFloat(newJob.hours),
-      hoursPerWeek:
-        newJob.skillsRequired === "PCA Services"
-          ? parseFloat(newJob.hoursPerWeek || 0)
-          : null,
-      daysPerWeek:
-        newJob.skillsRequired === "PCA Services" ? newJob.daysPerWeek : [],
-      skillsRequired: newJob.skillsRequired,
-      nonskilledServices: newJob.nonskilledServices || [],
-      payRate: newJob.payRate,
-      description: newJob.description,
-      referralSource: newJob.referralSource,
-      signedUp: [],
-      interestedEmployees: [], // New: track who's interested
-      assignedTo: null, // New: who admin assigned
-      status: "active",
-      createdAt: new Date().toISOString(),
-    };
-    const updatedJobs = [...jobs, job];
-    await saveJobs(updatedJobs);
-    const qualifiedEmployees = employees.filter(
-      (emp) =>
-        emp.role !== "Admin" &&
-        emp.active !== false && // Only active employees
-        canEmployeePerformService(emp, job.skillsRequired, job.location),
-    );
-    if (qualifiedEmployees.length > 0) {
-      const interestUrl = `${window.location.origin}${window.location.pathname}?interest=${job.id}`;
-      const smsMessage = `New job - Patient ${patientInitials} (${patientId}) on ${new Date(job.date).toLocaleDateString()} in ${newJob.city}. Service: ${job.skillsRequired}. Pay: ${job.payRate}. Interested? ${interestUrl} or login to view.`;
-      for (const emp of qualifiedEmployees) {
-        await sendSMSNotification(emp.phone, smsMessage, job.id, emp.id);
-      }
 
-      alert(
-        `Job posted! SMS sent to ${qualifiedEmployees.length} qualified employee(s).`,
-      );
-    } else {
-      alert(
-        "Job posted! No employees qualified for this service type and location.",
-      );
+    // Prevent double-click submissions
+    if (isCreatingJob) {
+      return;
     }
 
-    await createNotification(
-      job.id,
-      `New job: Patient ${patientInitials} (${patientId}) on ${job.date} - ${job.skillsRequired}`,
-      job.skillsRequired,
-    );
-    await logActivity(
-      "Job Posted",
-      `Patient ${patientInitials} (${patientId}) - ${job.skillsRequired} - ${newJob.city}`,
-    );
-    setNewJob({
-      patientFirstName: "",
-      patientLastName: "",
-      patientId: "",
-      city: "",
-      address: "",
-      zip: "",
-      location: "",
-      date: "",
-      hours: "",
-      hoursPerWeek: "",
-      daysPerWeek: [],
-      skillsRequired: "",
-      nonskilledServices: [],
-      payRate: "",
-      description: "",
-      referralSource: "",
-    });
-    setShowNewJobForm(false);
+    setIsCreatingJob(true);
+
+    try {
+      const patientId = newJob.patientId || generatePatientId();
+      const patientInitials = getPatientInitials(
+        newJob.patientFirstName,
+        newJob.patientLastName,
+      );
+      const fullLocation = `${newJob.address}, ${newJob.city}, VA${newJob.zip ? " " + newJob.zip : ""}`;
+      const job = {
+        id: Date.now().toString(),
+        patientFirstName: newJob.patientFirstName,
+        patientLastName: newJob.patientLastName,
+        patientId: patientId,
+        location: fullLocation,
+        city: newJob.city,
+        zip: newJob.zip || "",
+        address: newJob.address,
+        date: newJob.date,
+        hours:
+          newJob.skillsRequired === "PCA Services"
+            ? parseFloat(newJob.hoursPerWeek || 0)
+            : parseFloat(newJob.hours),
+        hoursPerWeek:
+          newJob.skillsRequired === "PCA Services"
+            ? parseFloat(newJob.hoursPerWeek || 0)
+            : null,
+        daysPerWeek:
+          newJob.skillsRequired === "PCA Services" ? newJob.daysPerWeek : [],
+        skillsRequired: newJob.skillsRequired,
+        nonskilledServices: newJob.nonskilledServices || [],
+        payRate: newJob.payRate,
+        description: newJob.description,
+        referralSource: newJob.referralSource,
+        signedUp: [],
+        interestedEmployees: [], // New: track who's interested
+        assignedTo: null, // New: who admin assigned
+        status: "active",
+        createdAt: new Date().toISOString(),
+      };
+      const updatedJobs = [...jobs, job];
+      await saveJobs(updatedJobs);
+      const qualifiedEmployees = employees.filter(
+        (emp) =>
+          emp.role !== "Admin" &&
+          emp.active !== false && // Only active employees
+          canEmployeePerformService(emp, job.skillsRequired, job.location),
+      );
+      if (qualifiedEmployees.length > 0) {
+        const interestUrl = `${window.location.origin}${window.location.pathname}?interest=${job.id}`;
+        const smsMessage = `New job - Patient ${patientInitials} (${patientId}) on ${new Date(job.date).toLocaleDateString()} in ${newJob.city}. Service: ${job.skillsRequired}. Pay: ${job.payRate}. Interested? ${interestUrl} or login to view.`;
+        for (const emp of qualifiedEmployees) {
+          await sendSMSNotification(emp.phone, smsMessage, job.id, emp.id);
+        }
+
+        alert(
+          `Job posted! SMS sent to ${qualifiedEmployees.length} qualified employee(s).`,
+        );
+      } else {
+        alert(
+          "Job posted! No employees qualified for this service type and location.",
+        );
+      }
+
+      await createNotification(
+        job.id,
+        `New job: Patient ${patientInitials} (${patientId}) on ${job.date} - ${job.skillsRequired}`,
+        job.skillsRequired,
+      );
+      await logActivity(
+        "Job Posted",
+        `Patient ${patientInitials} (${patientId}) - ${job.skillsRequired} - ${newJob.city}`,
+      );
+      setNewJob({
+        patientFirstName: "",
+        patientLastName: "",
+        patientId: "",
+        city: "",
+        address: "",
+        zip: "",
+        location: "",
+        date: "",
+        hours: "",
+        hoursPerWeek: "",
+        daysPerWeek: [],
+        skillsRequired: "",
+        nonskilledServices: [],
+        payRate: "",
+        description: "",
+        referralSource: "",
+      });
+      setShowNewJobForm(false);
+    } catch (error) {
+      console.error("Error creating job:", error);
+      alert("An error occurred while creating the job. Please try again.");
+    } finally {
+      setIsCreatingJob(false);
+    }
   };
   const updateReferralSource = async (jobId, newReferralSource) => {
     try {
@@ -4541,14 +4557,24 @@ Check Logs tab for full SMS details.`);
                   <div className="flex gap-3 pt-4">
                     <button
                       type="submit"
-                      className="flex-1 px-6 py-3 bg-teal-800 text-white rounded-lg hover:bg-teal-700 transition-colors font-medium"
+                      disabled={isCreatingJob}
+                      className={`flex-1 px-6 py-3 rounded-lg transition-colors font-medium ${
+                        isCreatingJob
+                          ? "bg-gray-400 text-gray-600 cursor-not-allowed"
+                          : "bg-teal-800 text-white hover:bg-teal-700"
+                      }`}
                     >
-                      Post Job
+                      {isCreatingJob ? "Creating Job..." : "Post Job"}
                     </button>
                     <button
                       type="button"
                       onClick={() => setShowNewJobForm(false)}
-                      className="flex-1 px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors font-medium"
+                      disabled={isCreatingJob}
+                      className={`flex-1 px-6 py-3 rounded-lg transition-colors font-medium ${
+                        isCreatingJob
+                          ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                          : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                      }`}
                     >
                       Cancel
                     </button>
