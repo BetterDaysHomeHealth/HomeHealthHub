@@ -109,6 +109,71 @@
 
             const firstInitial = firstName ? firstName.trim()[0] : '';const lastInitial = lastName ? lastName.trim()[0] : '';return firstInitial + '.' + lastInitial + '.';};
 
+// Mapbox Address Autocomplete Component (proxied via /api/geocode)
+function AddressAutocomplete({ value, onAddressSelect }) {
+  const [query, setQuery] = React.useState(value || '');
+  const [suggestions, setSuggestions] = React.useState([]);
+  const [showDropdown, setShowDropdown] = React.useState(false);
+  const debounceRef = React.useRef(null);
+
+  const search = async (q) => {
+    if (q.length < 3) { setSuggestions([]); setShowDropdown(false); return; }
+    try {
+      const res = await fetch(`/api/geocode?q=${encodeURIComponent(q)}`);
+      const data = await res.json();
+      setSuggestions(data.features || []);
+      setShowDropdown(true);
+    } catch (e) {
+      console.error('Geocoding error', e);
+    }
+  };
+
+  const handleInput = (e) => {
+    const q = e.target.value;
+    setQuery(q);
+    clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => search(q), 300);
+  };
+
+  const handleSelect = (feature) => {
+    const addressLine = feature.place_name.split(',')[0];
+    let city = '', zip = '';
+    (feature.context || []).forEach(ctx => {
+      if (ctx.id.startsWith('place.')) city = ctx.text;
+      if (ctx.id.startsWith('postcode.')) zip = ctx.text;
+    });
+    setQuery(addressLine);
+    setSuggestions([]);
+    setShowDropdown(false);
+    onAddressSelect({ address: addressLine, city, zip });
+  };
+
+  return (
+    React.createElement('div', { className: 'relative' },
+      React.createElement('input', {
+        type: 'text',
+        value: query,
+        onChange: handleInput,
+        onBlur: () => setTimeout(() => setShowDropdown(false), 200),
+        required: true,
+        placeholder: 'Start typing an address...',
+        className: 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+      }),
+      showDropdown && suggestions.length > 0 && React.createElement('div', {
+        className: 'absolute z-50 w-full bg-white border border-gray-300 rounded-lg shadow-lg mt-1 max-h-60 overflow-y-auto'
+      },
+        suggestions.map(feature =>
+          React.createElement('div', {
+            key: feature.id,
+            onMouseDown: () => handleSelect(feature),
+            className: 'px-4 py-2 hover:bg-blue-50 cursor-pointer text-sm text-gray-700 border-b border-gray-100'
+          }, feature.place_name)
+        )
+      )
+    )
+  );
+}
+
 // Training Portal Component (inline)
 function TrainingPortal({ currentUser, trainings, setTrainings, trainingCompletions, setTrainingCompletions, employees, jobs, setSmsLog }) {
   const [selectedTraining, setSelectedTraining] = React.useState(null);
@@ -676,7 +741,7 @@ const [searchTerm,setSearchTerm] = useState('');const [filterStatus,setFilterSta
           ];const hamptonRoadsCities = [
             'Norfolk','Virginia Beach','Chesapeake','Hampton','Newport News','Portsmouth','Suffolk','Franklin','Williamsburg','Poquoson','Smithfield','Yorktown'
           ];const [newJob,setNewJob] = useState({
-            patientFirstName: '',patientLastName: '',patientId: '',city: '',address: '',location: '',date: '',hours: '',hoursPerWeek: '',// For nonskilled jobs
+            patientFirstName: '',patientLastName: '',patientId: '',city: '',address: '',zip: '',location: '',date: '',hours: '',hoursPerWeek: '',// For nonskilled jobs
             daysPerWeek: [],// Days requiring care for nonskilled
             skillsRequired: '',nonskilledServices: [],// Array for multiple nonskilled services
             payRate: '',description: '',referralSource: '',// Doctor/Provider name
@@ -760,8 +825,8 @@ const [searchTerm,setSearchTerm] = useState('');const [filterStatus,setFilterSta
             const notification = {
               id: Date.now().toString(),jobId,message,timestamp: new Date().toISOString(),read: [],serviceType: serviceType
             };const updated = [...notifications,notification];await saveNotifications(updated);};const handleCreateJob = async (e) =>{
-            e.preventDefault();const patientId = newJob.patientId || generatePatientId();const patientInitials = getPatientInitials(newJob.patientFirstName,newJob.patientLastName);const fullLocation = `${newJob.address},${newJob.city},VA`;const job = {
-              id: Date.now().toString(),patientFirstName: newJob.patientFirstName,patientLastName: newJob.patientLastName,patientId: patientId,location: fullLocation,date: newJob.date,hours: newJob.skillsRequired === 'PCA Services' ? parseFloat(newJob.hoursPerWeek || 0) : parseFloat(newJob.hours),hoursPerWeek: newJob.skillsRequired === 'PCA Services' ? parseFloat(newJob.hoursPerWeek || 0) : null,daysPerWeek: newJob.skillsRequired === 'PCA Services' ? newJob.daysPerWeek : [],skillsRequired: newJob.skillsRequired,nonskilledServices: newJob.nonskilledServices || [],payRate: newJob.payRate,description: newJob.description,referralSource: newJob.referralSource,signedUp: [],interestedEmployees: [],// New: track who's interested
+            e.preventDefault();const patientId = newJob.patientId || generatePatientId();const patientInitials = getPatientInitials(newJob.patientFirstName,newJob.patientLastName);const fullLocation = `${newJob.address}, ${newJob.city}, VA${newJob.zip ? ' ' + newJob.zip : ''}`;const job = {
+              id: Date.now().toString(),patientFirstName: newJob.patientFirstName,patientLastName: newJob.patientLastName,patientId: patientId,location: fullLocation,city: newJob.city,zip: newJob.zip || '',address: newJob.address,date: newJob.date,hours: newJob.skillsRequired === 'PCA Services' ? parseFloat(newJob.hoursPerWeek || 0) : parseFloat(newJob.hours),hoursPerWeek: newJob.skillsRequired === 'PCA Services' ? parseFloat(newJob.hoursPerWeek || 0) : null,daysPerWeek: newJob.skillsRequired === 'PCA Services' ? newJob.daysPerWeek : [],skillsRequired: newJob.skillsRequired,nonskilledServices: newJob.nonskilledServices || [],payRate: newJob.payRate,description: newJob.description,referralSource: newJob.referralSource,signedUp: [],interestedEmployees: [],// New: track who's interested
               assignedTo: null,// New: who admin assigned
               status: 'active',createdAt: new Date().toISOString()
             };const updatedJobs = [...jobs,job];await saveJobs(updatedJobs);const qualifiedEmployees = employees.filter(emp =>
@@ -779,7 +844,7 @@ const [searchTerm,setSearchTerm] = useState('');const [filterStatus,setFilterSta
             await createNotification(
               job.id,`New job: Patient ${patientInitials} (${patientId}) on ${job.date} - ${job.skillsRequired}`,job.skillsRequired
             );await logActivity('Job Posted',`Patient ${patientInitials} (${patientId}) - ${job.skillsRequired} - ${newJob.city}`);setNewJob({
-              patientFirstName: '',patientLastName: '',patientId: '',city: '',address: '',location: '',date: '',hours: '',hoursPerWeek: '',daysPerWeek: [],skillsRequired: '',nonskilledServices: [],payRate: '',description: '',referralSource: ''
+              patientFirstName: '',patientLastName: '',patientId: '',city: '',address: '',zip: '',location: '',date: '',hours: '',hoursPerWeek: '',daysPerWeek: [],skillsRequired: '',nonskilledServices: [],payRate: '',description: '',referralSource: ''
             });setShowNewJobForm(false);};const updateReferralSource = async (jobId,newReferralSource) =>{
             try {
               const updatedJobs = jobs.map(job =>
@@ -2292,13 +2357,16 @@ Check Logs tab for full SMS details.`);
                               <label className="block text-sm font-medium text-gray-700 mb-1">
                                 Street Address
                               </label>
-                              <input
-                                type="text"
-                                required
+                              <AddressAutocomplete
                                 value={newJob.address || ''}
-                                onChange={(e) => setNewJob({ ...newJob,address: e.target.value })}
-                                placeholder="123 Main Street"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                onAddressSelect={({ address, city, zip }) => {
+                                  setNewJob(prev => ({
+                                    ...prev,
+                                    address,
+                                    city: city || prev.city,
+                                    zip: zip || prev.zip,
+                                  }));
+                                }}
                               />
                             </div>
                           </div>
@@ -4377,15 +4445,21 @@ Check Logs tab for full SMS details.`);
                               <div className="flex flex-wrap gap-4 text-gray-600">
                                 <div className="flex items-center gap-2">
                                   <MapPin className="w-4 h-4" />
-                                  <a
-                                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(job.location)}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-sm hover:text-blue-900 hover:underline flex items-center gap-1"
-                                  >
-                                    {job.location}
-                                    <ExternalLink className="w-3 h-3" />
-                                  </a>
+                                  {currentView === 'admin' ? (
+                                    <a
+                                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(job.location)}`}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="text-sm hover:text-blue-900 hover:underline flex items-center gap-1"
+                                    >
+                                      {job.location}
+                                      <ExternalLink className="w-3 h-3" />
+                                    </a>
+                                  ) : (
+                                    <span className="text-sm">
+                                      {job.city || extractCityFromLocation(job.location)}{job.zip ? `, VA ${job.zip}` : ', VA'}
+                                    </span>
+                                  )}
                                 </div>
                                 <div className="flex items-center gap-2">
                                   <Calendar className="w-4 h-4" />
