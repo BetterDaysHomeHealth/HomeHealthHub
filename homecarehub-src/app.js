@@ -505,7 +505,7 @@ function TrainingPortal({ currentUser, trainings, setTrainings, trainingCompleti
                         </label>
                       ))}
                     </div>
-                  </div>
+
                 ))}
                 <button 
                   onClick={handleQuizSubmit} 
@@ -617,7 +617,7 @@ function TrainingPortal({ currentUser, trainings, setTrainings, trainingCompleti
                   <div>
                     <h3 className="text-lg font-bold text-gray-800">{training.title}</h3>
                     <p className="text-xs text-gray-500 mt-1">{training.category}</p>
-                  </div>
+
                   {completed && <span className="text-2xl">✓</span>}
                 </div>
                 <p className="text-sm text-gray-600 mb-4">{training.description}</p>
@@ -628,7 +628,7 @@ function TrainingPortal({ currentUser, trainings, setTrainings, trainingCompleti
                 {completed ? (
                   <div className="w-full px-4 py-2 bg-blue-900 text-white text-center rounded-lg font-semibold cursor-default">
                     ✓ Completed This Month
-                  </div>
+
                 ) : (
                   <button 
                     onClick={() => handleStartTraining(training)}
@@ -1495,7 +1495,7 @@ Check Logs tab for full SMS details.`);
                         </div>
                       </div>
                     </div>
-                  </div>
+
                 )}
 
                 <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-teal-50 flex items-center justify-center p-4">
@@ -1504,7 +1504,7 @@ Check Logs tab for full SMS details.`);
                     <Users className="w-16 h-16 text-blue-900 mb-3" />
                     <h1 className="text-4xl font-bold text-blue-900">HomeHealthHub</h1>
                     <p className="text-gray-500 text-sm mt-1">Better Days Home Health</p>
-                  </div>
+
                   <p className="text-center text-gray-600 mb-6">Sign in to access your dashboard</p>
 
                   {loginError && (
@@ -1554,7 +1554,7 @@ Check Logs tab for full SMS details.`);
                     >
                       Forgot username or password?
                     </button>
-                  </div>
+
 
                   <div className="mt-6 text-center">
                     <p className="text-gray-600">
@@ -1566,13 +1566,10 @@ Check Logs tab for full SMS details.`);
                         Sign Up
                       </button>
                     </p>
-                  </div>
 
-                  <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-                    <p className="text-sm text-gray-700 font-medium mb-2">Demo Admin Access:</p>
-                    <p className="text-xs text-gray-600">Email: admin@healthcare.com</p>
-                    <p className="text-xs text-gray-600">Password: admin123</p>
-                  </div>
+
+
+
                 </div>
                 </div>
               </>
@@ -1587,7 +1584,7 @@ Check Logs tab for full SMS details.`);
                     <h1 className="text-4xl font-bold text-blue-900">HomeHealthHub</h1>
                     <p className="text-gray-500 text-sm mt-1">Better Days Home Health</p>
                     <h2 className="text-2xl font-bold text-gray-800 mt-4">Create Account</h2>
-                  </div>
+
                   <p className="text-center text-gray-600 mb-6">Join Better Days Home Health</p>
 
                   {signupError && (
@@ -1850,7 +1847,7 @@ Check Logs tab for full SMS details.`);
                       <p className="text-sm font-semibold text-gray-800">{currentUser.name}</p>
                       <p className="text-xs text-gray-500">{currentUser.role}</p>
                     </div>
-                  </div>
+
                 </div>
 
                 {/* HIPAA Compliance Banner */}
@@ -1863,7 +1860,7 @@ Check Logs tab for full SMS details.`);
                         Patient identities protected - All PHI displayed using initials and ID numbers only
                       </p>
                     </div>
-                  </div>
+
                 </div>
 
                 {currentView === 'admin' && (
@@ -1878,7 +1875,7 @@ Check Logs tab for full SMS details.`);
                         </p>
                       </div>
                     </div>
-                  </div>
+
                 )}
 
                 <div className="bg-white rounded-lg shadow-lg p-3 mb-2">
@@ -1980,7 +1977,7 @@ Check Logs tab for full SMS details.`);
                         </div>
                       )}
                     </div>
-                  </div>
+
 
                   <div className="flex flex-wrap gap-4 items-center">
                     <div className="flex gap-2">
@@ -2122,7 +2119,7 @@ Check Logs tab for full SMS details.`);
                         </button>
                       </div>
                     )}
-                  </div>
+
                 </div>
 
                 {showNewJobForm && (
@@ -2533,7 +2530,7 @@ Check Logs tab for full SMS details.`);
                         </form>
                       </div>
                     </div>
-                  </div>
+
                 )}
 
                 {/* Edit Profile Modal */}
@@ -2749,7 +2746,7 @@ Check Logs tab for full SMS details.`);
                         </form>
                       </div>
                     </div>
-                  </div>
+
                 )}
 
                 {/* Password Reset Modal (Admin Only) */}
@@ -2857,7 +2854,7 @@ Check Logs tab for full SMS details.`);
                         </form>
                       </div>
                     </div>
-                  </div>
+
                 )}
 
                 {/* Job Details Modal */}
@@ -3112,7 +3109,7 @@ Check Logs tab for full SMS details.`);
                         )}
                       </div>
                     </div>
-                  </div>
+
                 )}
 
                 {/* JOBS DASHBOARD - All job-related metrics in one view */}
@@ -3247,7 +3244,7 @@ Check Logs tab for full SMS details.`);
                           );})()}
                       </div>
                     </div>
-                  </div>
+
                 )}
 
                 {/* EMPLOYEES DASHBOARD - All employee metrics and performance */}
@@ -3391,7 +3388,7 @@ Check Logs tab for full SMS details.`);
                         )}
                       </div>
                     </div>
-                  </div>
+
                 )}
 
                 {/* Employee Profile Modal */}
@@ -3543,7 +3540,7 @@ Check Logs tab for full SMS details.`);
                         </div>
                       </div>
                     </div>
-                  </div>
+
                 )}
 
                 {/* Logs Tab */}
@@ -3664,7 +3661,7 @@ Check Logs tab for full SMS details.`);
                         </div>
                       </div>
                     )}
-                  </div>
+
                 )}
 
                 {/* Archive View */}
@@ -3913,7 +3910,7 @@ Check Logs tab for full SMS details.`);
                         )}
                         </>
                       );})()}
-                  </div>
+
                 )}
 
                 {/* Referral Sources View */}
@@ -4118,7 +4115,7 @@ Check Logs tab for full SMS details.`);
                           </div>
                         </>
                       );})()}
-                  </div>
+
                 )}
 
                 {/* TRAINING PORTAL */}
@@ -4235,7 +4232,7 @@ Check Logs tab for full SMS details.`);
                         </div>
                       </div>
                     </div>
-                  </div>
+
 
                   <div className="space-y-4">
                   {(() =>{
