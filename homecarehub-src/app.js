@@ -2575,35 +2575,26 @@ Check Logs tab for full SMS details.`);
 
     if (
       !window.confirm(
-        "Final confirmation: Type your password to confirm account deletion",
+        "Final confirmation: Click OK to permanently delete your account",
       )
     ) {
       return;
     }
 
     try {
-      const employeesResult = await window.storage
-        .get("healthcare-employees")
-        .catch(() => null);
-      if (!employeesResult) {
-        alert("Error loading employee data");
-        return;
-      }
+      // Delete employee via API
+      await EmployeeAPI.deleteEmployee(currentUser.id);
 
-      const allEmployees = JSON.parse(employeesResult.value);
-      const updatedEmployees = allEmployees.filter(
-        (emp) => emp.id !== currentUser.id,
-      );
-      await window.storage.set(
-        "healthcare-employees",
-        JSON.stringify(updatedEmployees),
-      );
-      await window.storage.delete("current-user");
+      // Clear local session
+      EmployeeAPI.clearCurrentUser();
+
+      // Log activity
       await logActivity(
         "Account Deleted",
         `${currentUser.name} (${currentUser.email}) deleted their account`,
         currentUser.name,
       );
+
       alert(
         "Your account has been permanently deleted. You will now be logged out.",
       );
@@ -2619,30 +2610,26 @@ Check Logs tab for full SMS details.`);
   };
   const handleAdminToggleEmployeeStatus = async (employeeId) => {
     try {
-      const employeesResult = await window.storage
-        .get("healthcare-employees")
-        .catch(() => null);
-      if (!employeesResult) return;
-      const allEmployees = JSON.parse(employeesResult.value);
-      const updatedEmployees = allEmployees.map((emp) => {
-        if (emp.id === employeeId) {
-          const newStatus = !emp.active;
-          return { ...emp, active: newStatus };
-        }
-        return emp;
+      const employee = employees.find((e) => e.id === employeeId);
+      if (!employee) return;
+
+      const newStatus = !employee.active;
+
+      // Update employee via API
+      const updatedEmployee = await EmployeeAPI.updateEmployee(employeeId, {
+        active: newStatus,
       });
-      await window.storage.set(
-        "healthcare-employees",
-        JSON.stringify(updatedEmployees),
-      );
+
+      // Reload employee list from API
+      const updatedEmployees = await EmployeeAPI.getAllEmployees();
       setEmployees(updatedEmployees);
-      const employee = updatedEmployees.find((e) => e.id === employeeId);
+
       await logActivity(
-        employee.active ? "Employee Activated" : "Employee Deactivated",
-        `${employee.name} (${employee.email}) account ${employee.active ? "activated" : "deactivated"} by admin`,
+        newStatus ? "Employee Activated" : "Employee Deactivated",
+        `${updatedEmployee.name} (${updatedEmployee.email}) account ${newStatus ? "activated" : "deactivated"} by admin`,
       );
       alert(
-        `Employee ${employee.active ? "activated" : "deactivated"} successfully`,
+        `Employee ${newStatus ? "activated" : "deactivated"} successfully`,
       );
     } catch (error) {
       console.error("Toggle employee status error:", error);
@@ -2661,19 +2648,13 @@ Check Logs tab for full SMS details.`);
     }
 
     try {
-      const employeesResult = await window.storage
-        .get("healthcare-employees")
-        .catch(() => null);
-      if (!employeesResult) return;
-      const allEmployees = JSON.parse(employeesResult.value);
-      const updatedEmployees = allEmployees.filter(
-        (emp) => emp.id !== employeeId,
-      );
-      await window.storage.set(
-        "healthcare-employees",
-        JSON.stringify(updatedEmployees),
-      );
+      // Delete employee via API
+      await EmployeeAPI.deleteEmployee(employeeId);
+
+      // Reload employee list from API
+      const updatedEmployees = await EmployeeAPI.getAllEmployees();
       setEmployees(updatedEmployees);
+
       await logActivity(
         "Employee Deleted",
         `${employee.name} (${employee.email}) deleted by admin`,

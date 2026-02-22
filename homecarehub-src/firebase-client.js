@@ -92,6 +92,27 @@ class EmployeeAPI {
     }
   }
   
+  // Delete employee
+  static async deleteEmployee(employeeId) {
+    try {
+      const response = await fetch(`${API_BASE}/employees?id=${employeeId}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      
+      if (!response.ok) {
+        throw new Error(`API error: ${response.statusText}`);
+      }
+      
+      const result = await response.json();
+      console.log('Employee deleted:', result);
+      return result;
+    } catch (error) {
+      console.error('Error deleting employee:', error);
+      throw error;
+    }
+  }
+  
   // Local storage helpers for current user (still use local for session)
   static saveCurrentUser(user) {
     sessionStorage.setItem('currentUser', JSON.stringify(user));

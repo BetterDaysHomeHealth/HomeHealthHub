@@ -149,13 +149,31 @@ async function updateEmployee(req, res) {
   }
 }
 
+// DELETE /api/employees/[id] - Delete employee
+async function deleteEmployee(req, res) {
+  try {
+    const { id } = req.query;
+    if (!id) {
+      return res.status(400).json({ error: 'Employee ID required' });
+    }
+    
+    const db = initializeFirebase();
+    await db.collection('employees').doc(id).delete();
+    
+    res.status(200).json({ success: true, message: 'Employee deleted successfully' });
+  } catch (error) {
+    console.error('DELETE /api/employees/[id] error:', error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
 // Main handler
 export default async function handler(req, res) {
   const { method, query } = req;
   
   // Set CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   
   if (method === 'OPTIONS') {
@@ -173,6 +191,8 @@ export default async function handler(req, res) {
       return createEmployee(req, res);
     } else if (method === 'PUT') {
       return updateEmployee(req, res);
+    } else if (method === 'DELETE') {
+      return deleteEmployee(req, res);
     } else {
       res.status(405).json({ error: 'Method not allowed' });
     }
