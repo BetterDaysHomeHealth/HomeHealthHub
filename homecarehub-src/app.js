@@ -1568,11 +1568,7 @@ Check Logs tab for full SMS details.`);
                     </p>
                   </div>
 
-                  <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-                    <p className="text-sm text-gray-700 font-medium mb-2">Demo Admin Access:</p>
-                    <p className="text-xs text-gray-600">Email: admin@healthcare.com</p>
-                    <p className="text-xs text-gray-600">Password: admin123</p>
-                  </div>
+
                 </div>
                 </div>
               </>
